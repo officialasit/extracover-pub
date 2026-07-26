@@ -1,0 +1,8 @@
+# Astro build output
+dist/
+.astro/
+node_modules/
+
+# Generated at build time from src/assets/white-banner.png — never committed,
+# so it cannot drift from the banner it is built from.
+public/og-banner.png

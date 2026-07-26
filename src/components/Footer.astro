@@ -1,0 +1,56 @@
+---
+import { contactUrl, contactLabel, links } from '../site.config';
+---
+
+<footer>
+  <div class="inner">
+    <div class="line-strong">Built by a fan, for fans.</div>
+
+    <div class="line">
+      <a href={contactUrl}>{contactLabel}</a>
+      <span class="sep" aria-hidden="true">·</span>
+      <a href={links.source}>Source on GitHub</a>
+    </div>
+
+    <div class="line-quiet">Windows only · Free — no payments, ever.</div>
+
+    <p class="disclaimer">
+      Extra Cover is an unofficial fan project. It is not affiliated with, endorsed by,
+      or connected to Big Ant Studios, Cricket 26, or the Indian Premier League.
+    </p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    width: 100%;
+    border-top: 1px solid var(--line-faint);
+    background: var(--bg-footer);
+  }
+
+  .inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 24px 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .line-strong { font-size: 16px; font-weight: 600; color: var(--ink); }
+  .line        { font-size: 14px; color: var(--ink-2); }
+  .line-quiet  { font-size: 13px; color: var(--ink-3); }
+
+  .sep { color: var(--ink-4); margin: 0 8px; }
+
+  .disclaimer {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--ink-4);
+    max-width: 560px;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+</style>

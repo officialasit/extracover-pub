@@ -1,0 +1,94 @@
+---
+const steps = ['Detect game', 'Pick a preset', 'Play'];
+---
+
+<section class="how">
+  <div class="panel">
+    <h2 class="label">How it works</h2>
+
+    <ol class="steps">
+      {steps.map((step, i) => (
+        <>
+          {i > 0 && <li class="arrow" aria-hidden="true">→</li>}
+          <li class="step">
+            <span class="badge">{i + 1}</span>
+            {step}
+          </li>
+        </>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .how {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px 110px;
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 36px 32px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  /* A heading for structure, styled as the design's grey label. */
+  .label {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .steps {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .badge {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--red-veil);
+    color: var(--red-bright);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .arrow { color: var(--arrow); font-size: 18px; }
+
+  @media (max-width: 640px) {
+    .how { padding-bottom: 72px; }
+    .panel { padding: 28px 24px; }
+    /* Stacked vertically, a horizontal arrow points the wrong way. */
+    .arrow { display: none; }
+    .steps { flex-direction: column; align-items: flex-start; gap: 14px; }
+  }
+</style>

@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Features from '../components/Features.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base
+  title="Extra Cover — IPL atmosphere for Cricket 26"
+  description="One-click modding for Cricket 26. Apply IPL crowd atmosphere, stadium textures and more — no modding skills needed. Free, Windows, Steam."
+>
+  <main class="page">
+    <Hero />
+
+    {/* The dashed pitch-line divider from the design */}
+    <div class="divider-wrap"><div class="divider"></div></div>
+
+    <Features />
+    <HowItWorks />
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .divider-wrap {
+    width: 100%;
+    max-width: 1000px;
+    padding: 24px 24px 0;
+  }
+  .divider { border-top: 1px dashed var(--line-2); }
+</style>

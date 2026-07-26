@@ -1,0 +1,100 @@
+/* Design tokens lifted from the Claude Design source
+   ("Extra Cover Landing.dc.html"). The original used inline styles throughout;
+   they are consolidated here so a colour exists once rather than fourteen
+   times. Values are unchanged. */
+
+:root {
+  /* Surfaces */
+  --bg:          #0d0d0f;
+  --bg-footer:   #0a0a0c;
+  --surface:     #141417;
+  --input-bg:    #17171b;
+
+  /* Lines */
+  --line:        #232329;
+  --line-2:      #2c2c33;
+  --line-faint:  #1d1d22;
+  --arrow:       #3a3a42;
+
+  /* Ink */
+  --ink:         #f2f2f0;
+  --ink-2:       #b9b9bf;
+  --ink-3:       #6b6b73;
+  --ink-4:       #54545c;
+
+  /* Accent */
+  --red:         #e02b2b;
+  --red-bright:  #ff5a5a;
+  --red-deep:    #c81f1f;
+  --red-veil:    rgba(224, 43, 43, 0.15);
+  --red-edge:    rgba(224, 43, 43, 0.45);
+
+  --font-display: 'Exo 2', system-ui, sans-serif;
+  --font-body:    'Saira', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: var(--red); text-decoration: none; }
+a:hover { color: var(--red-bright); text-decoration: underline; }
+
+::placeholder { color: var(--ink-3); }
+
+img { max-width: 100%; height: auto; }
+
+/* The design's headings are italic Exo 2, uppercase, tight tracking. */
+.h-display {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+/* Small red uppercase label that introduces a section. */
+.eyebrow {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.shell {
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* Anyone who has asked not to see motion shouldn't. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Keyboard focus was not expressed in the design, and browsers' default ring is
+   invisible on this background. */
+:focus-visible {
+  outline: 2px solid var(--red-bright);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

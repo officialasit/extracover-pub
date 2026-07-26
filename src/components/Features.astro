@@ -1,0 +1,101 @@
+---
+// Copy is verbatim from the design's renderVals(). It was data there because
+// the prototype rendered it through <sc-for>; here it is just an array.
+const features = [
+  {
+    num: '01',
+    title: 'One-click apply & restore',
+    body: 'Mods install and uninstall with a single click. Your original files are always backed up automatically.',
+  },
+  {
+    num: '02',
+    title: 'IPL Atmosphere Pack',
+    body: 'Authentic crowd noise, chants and stadium ambience — the full match-day feel, in-game.',
+  },
+  {
+    num: '03',
+    title: 'Auto game detection',
+    body: 'Finds your Steam install of Cricket 26 automatically. No folder digging, no config files.',
+  },
+  {
+    num: '04',
+    title: 'Safe by design',
+    body: 'Never touches game files without a backup. Everything is fully reversible.',
+  },
+];
+---
+
+<section class="features">
+  <div class="eyebrow">Expected features</div>
+  <h2 class="h-display">Everything handled for you</h2>
+
+  <div class="grid">
+    {features.map((f) => (
+      <article class="card">
+        <div class="num" aria-hidden="true">{f.num}</div>
+        <h3 class="title">{f.title}</h3>
+        <p class="body">{f.body}</p>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .features {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 96px 24px;
+  }
+
+  .eyebrow { margin-bottom: 12px; }
+
+  h2 {
+    margin: 0 0 48px;
+    font-size: clamp(26px, 4vw, 36px);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 28px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .num {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 900;
+    font-size: 26px;
+    color: var(--red);
+    line-height: 1;
+  }
+
+  .title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .body {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 640px) {
+    .features { padding: 64px 24px; }
+    h2 { margin-bottom: 32px; }
+  }
+</style>
