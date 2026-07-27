@@ -1,0 +1,146 @@
+---
+const pillars = [
+  {
+    icon: `<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>`,
+    title: '1-Click Install & Backup',
+    desc: 'Apply or restore mods in seconds with automatic byte-for-byte backups.',
+  },
+  {
+    icon: `<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>`,
+    title: 'Built-in Pack Studio',
+    desc: 'Create, package, and share custom mods with the community.',
+  },
+  {
+    icon: `<path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6zm4 2v8m6-8v8m6-8v8"/>`,
+    title: 'Stadium Boards & HUD',
+    desc: 'Customize perimeter LED graphics, outfield decals, and broadcast scorebugs.',
+  },
+  {
+    icon: `<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/>`,
+    title: 'Audio & Commentary',
+    desc: 'Crowd ambience, chants, and commentary engines in active development.',
+    wip: true,
+  },
+];
+---
+
+<section class="v-pillars-section" id="features">
+  <div class="v-pillars-header">
+    <div class="eyebrow">Features</div>
+    <h2 class="h-display section-title">Everything you need</h2>
+  </div>
+
+  <div class="v-pillars-grid">
+    {pillars.map((item) => (
+      <div class={`v-pillar-card ${item.wip ? 'wip' : ''}`}>
+        <div class="v-card-head">
+          <div class="v-icon-box" set:html={`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${item.icon}</svg>`} />
+          <h3 class="v-pillar-card-title">
+            {item.title}
+            {item.wip && <span class="v-wip-pill">WIP</span>}
+          </h3>
+        </div>
+        <p class="v-pillar-card-desc">{item.desc}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .v-pillars-section {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 64px 24px;
+  }
+
+  .v-pillars-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 36px;
+  }
+
+  .v-pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .v-pillar-card {
+    background: var(--surface-card);
+    border: 1px solid var(--line-2);
+    border-radius: 12px;
+    padding: 24px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color 0.2s;
+  }
+  .v-pillar-card:hover {
+    border-color: var(--red-edge);
+  }
+
+  .v-pillar-card.wip {
+    border-style: dashed;
+  }
+
+  .v-card-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .v-icon-box {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: var(--red-veil);
+    border: 1px solid var(--red-edge);
+    color: var(--red-bright);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+  }
+  .v-icon-box :global(svg) { width: 20px; height: 20px; }
+
+  .v-pillar-card.wip .v-icon-box {
+    background: rgba(250, 176, 5, 0.12);
+    border-color: rgba(250, 176, 5, 0.35);
+    color: #fcc419;
+  }
+
+  .v-pillar-card-title {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .v-wip-pill {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(250, 176, 5, 0.15);
+    color: #fcc419;
+    border: 1px solid rgba(250, 176, 5, 0.35);
+    letter-spacing: 0.1em;
+  }
+
+  .v-pillar-card-desc {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  @media (max-width: 760px) {
+    .v-pillars-grid { grid-template-columns: 1fr; gap: 16px; }
+  }
+</style>

@@ -5,14 +5,17 @@
 // wherever fonts.googleapis.com doesn't.
 //
 // Only the weights the design actually uses:
-//   Exo 2  — italic 800 (headings) and italic 900 (feature numerals)
-//   Saira  — 400/500/600/700
+//   Exo 2       — italic 800 (section heads)
+//   Saira       — 400/500/600/700 (body)
+//   Azeret Mono — 400/500/700 (labels, figures, the scoreboard strip)
 import '@fontsource/exo-2/latin-800-italic.css';
-import '@fontsource/exo-2/latin-900-italic.css';
 import '@fontsource/saira/latin-400.css';
 import '@fontsource/saira/latin-500.css';
 import '@fontsource/saira/latin-600.css';
 import '@fontsource/saira/latin-700.css';
+import '@fontsource/azeret-mono/latin-400.css';
+import '@fontsource/azeret-mono/latin-500.css';
+import '@fontsource/azeret-mono/latin-700.css';
 import '../styles/global.css';
 
 interface Props {
@@ -37,15 +40,31 @@ const ogImage = new URL(`${base}og-banner.png`, Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#0d0d0f" />
+    <meta name="theme-color" content="#08080a" />
     <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
 
+
+
+    {/*
+      This card is the advertisement. The site has no organic traffic — it
+      spreads by someone pasting the link into a Discord or a forum thread, and
+      the preview is all most people will ever see of it. Dimensions are
+      declared so clients reserve the right space instead of reflowing, and the
+      alt text is there because the card carries the entire pitch as pixels.
+    */}
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Extra Cover" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt"
+          content="Extra Cover — Mod Cricket 26 in 1 Click. Visual assets, stadium textures, HUD overlays. Free and open source for Windows and Steam." />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image:alt"
+          content="Extra Cover — Mod Cricket 26 in 1 Click. Free and open source." />
   </head>
 
   <body>

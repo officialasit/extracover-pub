@@ -1,0 +1,197 @@
+---
+import { links } from '../site.config';
+
+// Native <details>/<summary>: no JS, keyboard and screen-reader accessible for
+// free, and it still works if the page's scripts never load.
+//
+// Six, ordered by what a first-time visitor needs before deciding to download.
+// Two were cut:
+//   * "Does it cost anything" — the hero's terms band says PRICE / Free and the
+//     footer says it again. A third answer to a question the page has already
+//     answered twice is filler.
+//   * "Can I make my own pack" — creator-facing, and there is no authoring
+//     documentation to point at yet. Its one load-bearing sentence, that we
+//     cannot vouch for a stranger's pack, moved into the safety answer, which
+//     is where a caution about safety belonged anyway.
+//
+// The answers deliberately do not overclaim. Two in particular:
+//   * Ban risk — we can describe what the app does, not what the publisher
+//     permits, so it says exactly that.
+//   * SmartScreen — naming it before someone hits it is the difference between
+//     "this looks like malware" and "right, they warned me". This is the single
+//     highest-friction moment in the whole funnel for an unsigned installer.
+const faqs = [
+  {
+    q: 'Is this safe? Will it break my game?',
+    a: `Every file Extra Cover changes is backed up before it is touched, and removing a
+        pack writes the originals straight back. If anything ever looks wrong, Steam's
+        "Verify integrity of game files" rebuilds a clean install in a couple of minutes.
+        Packs you import from other people are a separate question: Extra Cover checks
+        the structure of a <code>.c26pack</code> but cannot vouch for what someone else
+        put inside it, so treat those like any other download.`,
+  },
+  {
+    q: 'Can I get banned for using it?',
+    a: `Extra Cover only rewrites files on your own PC — it never touches your account,
+        Steam, or anything online. What it cannot do is speak for the publisher's position
+        on modified installs, so if you play online, take your packs off first.`,
+  },
+  {
+    q: 'Which version of Cricket 26 does it work with?',
+    a: `Cricket 26 on Windows via Steam. Consoles cannot load modified game files at all, and
+        other PC storefronts are not supported yet.`,
+  },
+  {
+    q: 'Windows says “Windows protected your PC”. Is something wrong?',
+    a: `No — that is SmartScreen, and it appears for any installer whose publisher has not
+        bought a code-signing certificate. They run a few hundred dollars a year, which a
+        free fan project does not have. Click <strong>More info</strong>, then
+        <strong>Run anyway</strong>. If you would rather verify first, every release
+        publishes a SHA-512 checksum for the installer alongside it.`,
+  },
+  {
+    q: 'What happens when Cricket 26 gets a patch?',
+    a: `A game update can overwrite modded files. Extra Cover keeps a record of exactly what
+        it changed, notices when the game on disk no longer matches, and tells you — so you
+        can put your packs back with a click rather than wondering why the crowd went quiet.`,
+  },
+  {
+    q: 'How do I remove a mod?',
+    a: `One click, on the same screen you installed it from. Remove one pack and the others
+        stay exactly as they were. Do it <em>before</em> uninstalling Extra Cover, though:
+        the uninstaller removes the app, not the changes it made to your game.`,
+  },
+];
+
+// FAQPage structured data, built from the same array the page renders so the
+// two cannot drift. These six answers are most of the page's substance, and
+// this is the only realistic organic play a 300-word single page has — it makes
+// them eligible for rich results on searches like "can you get banned for
+// modding cricket 26". Google requires the marked-up text to match the visible
+// text, hence stripping the inline tags and collapsing the template-literal
+// indentation rather than hand-writing a second copy.
+const plain = (html: string) =>
+  html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: plain(f.q),
+    acceptedAnswer: { '@type': 'Answer', text: plain(f.a) },
+  })),
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+<section class="section faq" id="faq">
+  <div class="eyebrow">Questions</div>
+  <h2 class="h-display section-title">Before you ask</h2>
+
+  <div class="list">
+    {faqs.map((item) => (
+      <details class="item">
+        <summary>
+          <h3 class="q">{item.q}</h3>
+          <span class="chev" aria-hidden="true"></span>
+        </summary>
+        <p class="a" set:html={item.a} />
+      </details>
+    ))}
+  </div>
+
+  <p class="more">
+    Still stuck? <a href={links.issues}>Ask on GitHub</a> — questions are welcome, not just bugs.
+  </p>
+</section>
+
+<style>
+  .list {
+    margin-top: 40px;
+    border-top: 1px solid var(--line);
+  }
+
+  .item {
+    border-bottom: 1px solid var(--line);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 4px;
+    cursor: pointer;
+    list-style: none;          /* Firefox */
+    user-select: none;
+  }
+  summary::-webkit-details-marker { display: none; }   /* Safari */
+  summary:hover .q { color: var(--red-bright); }
+
+  .q {
+    font-size: var(--t-md);
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--ink);
+    text-wrap: pretty;
+    transition: color 0.13s;
+    margin: 0;
+  }
+
+  /* A chevron drawn from a rotated border, so there is no icon file and no
+     inline SVG repeated eight times.
+     Deliberately not transitioned. With `transition: transform …` on it, the
+     open state never lands: toggling <details> leaves the computed transform
+     and border-colour pinned at the closed values, so the caret stays pointing
+     down on an expanded row. Verified against a production build — the cascade
+     is correct and removing the transition alone fixes it. A caret that snaps
+     is normal; one that never turns reads as broken. */
+  .chev {
+    flex: 0 0 auto;
+    width: 9px;
+    height: 9px;
+    margin-right: 6px;
+    border-right: 2px solid var(--ink-3);
+    border-bottom: 2px solid var(--ink-3);
+    transform: rotate(45deg) translate(-2px, -2px);
+  }
+  .item[open] .chev {
+    transform: rotate(225deg) translate(-2px, -2px);
+    border-color: var(--red-bright);
+  }
+
+  .a {
+    margin: 0;
+    padding: 0 4px 22px;
+    max-width: 68ch;
+    font-size: var(--t-base);
+    line-height: 1.7;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+  .a :global(strong) { color: var(--ink); font-weight: 700; }
+  .a :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--input-bg);
+    border: 1px solid var(--line-2);
+    color: var(--ink);
+  }
+
+  .more {
+    margin: 30px 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--t-xs);
+    letter-spacing: 0.03em;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 640px) {
+    .list { margin-top: 28px; }
+    .q { font-size: var(--t-base); }
+  }
+</style>

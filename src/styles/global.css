@@ -1,36 +1,47 @@
-/* Design tokens lifted from the Claude Design source
-   ("Extra Cover Landing.dc.html"). The original used inline styles throughout;
-   they are consolidated here so a colour exists once rather than fourteen
-   times. Values are unchanged. */
-
 :root {
   /* Surfaces */
-  --bg:          #0d0d0f;
-  --bg-footer:   #0a0a0c;
-  --surface:     #141417;
-  --input-bg:    #17171b;
+  --bg:           #08080a;
+  --bg-footer:    #050507;
+  --surface:      #121217;
+  --surface-card: #16161e;
+  --input-bg:     #14141c;
 
   /* Lines */
-  --line:        #232329;
-  --line-2:      #2c2c33;
-  --line-faint:  #1d1d22;
-  --arrow:       #3a3a42;
+  --line:         #22222d;
+  --line-2:       #2e2e3d;
+  --line-glow:    rgba(240, 62, 62, 0.3);
 
   /* Ink */
-  --ink:         #f2f2f0;
-  --ink-2:       #b9b9bf;
-  --ink-3:       #6b6b73;
-  --ink-4:       #54545c;
+  --ink:          #f8f9fa;
+  --ink-2:        #c1c2c5;
+  --ink-3:        #9ea0a6;
+  --ink-4:        #76787f;
 
   /* Accent */
-  --red:         #e02b2b;
-  --red-bright:  #ff5a5a;
-  --red-deep:    #c81f1f;
-  --red-veil:    rgba(224, 43, 43, 0.15);
-  --red-edge:    rgba(224, 43, 43, 0.45);
+  --red:          #f03e3e;
+  --red-bright:   #ff6b6b;
+  --red-deep:     #d63333;
+  --red-veil:     rgba(240, 62, 62, 0.12);
+  --red-edge:     rgba(240, 62, 62, 0.4);
 
+  /* Typography */
   --font-display: 'Exo 2', system-ui, sans-serif;
   --font-body:    'Saira', system-ui, sans-serif;
+  --font-mono:    'Azeret Mono', ui-monospace, 'Cascadia Mono', monospace;
+
+  /* Type Scale */
+  --t-2xs:        11px;
+  --t-xs:         12px;
+  --t-sm:         14px;
+  --t-base:       15.5px;
+  --t-md:         17px;
+  --t-hero:       clamp(20px, 3vw, 26px);
+  --t-display:    clamp(30px, 4.4vw, 44px);
+
+  /* Layout Rhythm */
+  --gap-section:  clamp(88px, 10vw, 136px);
+  --measure:      1140px;
+  --pad-x:        24px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -38,24 +49,30 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--bg);
+  background-color: #08080a;
+  background-image:
+    radial-gradient(ellipse 90% 50% at 50% -5%, rgba(220, 38, 38, 0.2) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 35% at 5% 42%, rgba(220, 38, 38, 0.09) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 35% at 95% 68%, rgba(220, 38, 38, 0.09) 0%, transparent 65%),
+    radial-gradient(ellipse 85% 45% at 50% 105%, rgba(220, 38, 38, 0.15) 0%, transparent 70%);
+  background-attachment: fixed;
 }
 
 body {
   font-family: var(--font-body);
   color: var(--ink);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a { color: var(--red); text-decoration: none; }
+a { color: var(--red-bright); text-decoration: none; }
 a:hover { color: var(--red-bright); text-decoration: underline; }
 
 ::placeholder { color: var(--ink-3); }
 
 img { max-width: 100%; height: auto; }
 
-/* The design's headings are italic Exo 2, uppercase, tight tracking. */
 .h-display {
   font-family: var(--font-display);
   font-style: italic;
@@ -65,23 +82,38 @@ img { max-width: 100%; height: auto; }
   margin: 0;
 }
 
-/* Small red uppercase label that introduces a section. */
 .eyebrow {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: var(--t-2xs);
+  font-weight: 600;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--red);
+  color: var(--red-bright);
+}
+.eyebrow::after {
+  content: '';
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--line);
 }
 
-.shell {
+.section {
   width: 100%;
+  max-width: var(--measure);
   margin: 0 auto;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding: var(--gap-section) var(--pad-x);
 }
 
-/* Anyone who has asked not to see motion shouldn't. */
+.section-title {
+  margin: 12px 0 0;
+  font-size: var(--t-display);
+  line-height: 1.08;
+  color: var(--ink);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -91,8 +123,6 @@ img { max-width: 100%; height: auto; }
   }
 }
 
-/* Keyboard focus was not expressed in the design, and browsers' default ring is
-   invisible on this background. */
 :focus-visible {
   outline: 2px solid var(--red-bright);
   outline-offset: 2px;

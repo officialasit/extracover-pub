@@ -1,38 +1,46 @@
 ---
-// Copy is verbatim from the design's renderVals(). It was data there because
-// the prototype rendered it through <sc-for>; here it is just an array.
 const features = [
   {
-    num: '01',
-    title: 'One-click apply & restore',
+    tag: 'Apply',
+    title: 'One-Click Apply & Restore',
     body: 'Mods install and uninstall with a single click. Your original files are always backed up automatically.',
   },
   {
-    num: '02',
+    tag: 'Audio',
     title: 'IPL Atmosphere Pack',
-    body: 'Authentic crowd noise, chants and stadium ambience — the full match-day feel, in-game.',
+    body: 'Authentic crowd noise, stadium chants, and ambient noise for a full match-day feel in-game.',
   },
   {
-    num: '03',
-    title: 'Auto game detection',
-    body: 'Finds your Steam install of Cricket 26 automatically. No folder digging, no config files.',
+    tag: 'Setup',
+    title: 'Auto Game Detection',
+    body: 'Finds your Steam installation of Cricket 26 automatically. No folder browsing, no config editing.',
   },
   {
-    num: '04',
-    title: 'Safe by design',
-    body: 'Never touches game files without a backup. Everything is fully reversible.',
+    tag: 'Content',
+    title: 'Audio & Textures Combined',
+    body: 'A single pack can carry both stadium crowd audio and boundary boards, installed together in one step.',
+  },
+  {
+    tag: 'Library',
+    title: 'Multi-Pack Support',
+    body: 'Combine multiple packs seamlessly. Removing one pack leaves your remaining mods untouched.',
+  },
+  {
+    tag: 'Safety',
+    title: 'Zero Risk Overwriting',
+    body: 'Original game files are copied before modification, restoring exact bytes when uninstalled.',
   },
 ];
 ---
 
-<section class="features">
-  <div class="eyebrow">Expected features</div>
-  <h2 class="h-display">Everything handled for you</h2>
+<section class="section features" id="features">
+  <div class="eyebrow">Features</div>
+  <h2 class="h-display section-title">Designed for simplicity</h2>
 
   <div class="grid">
     {features.map((f) => (
       <article class="card">
-        <div class="num" aria-hidden="true">{f.num}</div>
+        <div class="tag">{f.tag}</div>
         <h3 class="title">{f.title}</h3>
         <p class="body">{f.body}</p>
       </article>
@@ -41,61 +49,59 @@ const features = [
 </section>
 
 <style>
-  .features {
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 96px 24px;
-  }
-
-  .eyebrow { margin-bottom: 12px; }
-
-  h2 {
-    margin: 0 0 48px;
-    font-size: clamp(26px, 4vw, 36px);
-  }
-
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: 1fr;
     gap: 16px;
+    margin-top: 40px;
   }
+  @media (min-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 900px) { .grid { grid-template-columns: repeat(3, 1fr); } }
 
   .card {
-    background: var(--surface);
-    border: 1px solid var(--line);
+    background: var(--surface-card);
+    border: 1px solid var(--line-2);
     border-radius: 12px;
-    padding: 28px 26px;
+    padding: 24px 24px 26px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .card:hover {
+    border-color: var(--red-edge);
+    transform: translateY(-2px);
   }
 
-  .num {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-weight: 900;
-    font-size: 26px;
-    color: var(--red);
-    line-height: 1;
+  .tag {
+    font-family: var(--font-mono);
+    font-size: var(--t-2xs);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red-bright);
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--line);
   }
 
   .title {
-    margin: 0;
-    font-size: 18px;
+    font-family: var(--font-display);
     font-weight: 700;
+    margin: 0 0 10px;
+    font-size: var(--t-md);
+    color: var(--ink);
+    line-height: 1.3;
   }
 
   .body {
     margin: 0;
-    font-size: 15px;
+    font-size: var(--t-base);
     line-height: 1.6;
     color: var(--ink-2);
     text-wrap: pretty;
   }
 
   @media (max-width: 640px) {
-    .features { padding: 64px 24px; }
-    h2 { margin-bottom: 32px; }
+    .grid { margin-top: 28px; }
   }
 </style>

@@ -1,6 +1,37 @@
 ---
+import { Image } from 'astro:assets';
+import banner from '../assets/banner.png';
 import { contactUrl, contactLabel, links } from '../site.config';
 ---
+
+{/*
+  The banner art, back — as a closing band rather than the masthead it used to
+  be. Two reasons it works here and did not there. It is the only cricket
+  imagery on the page: floodlights, an empty stand, a red ball mid-seam, which
+  is precisely the atmosphere the product sells and which a page of dark panels
+  and mono labels cannot convey on its own. And at the end of a page a large
+  image is a reward, where at the top it was an obstacle between the reader and
+  the pitch.
+
+  This is the app's dark variant of the same artwork, not the white one that
+  opened the page before. Same lockup, same composition, on a ground that
+  belongs on this background instead of a bright slab that fought it.
+
+  Cropped to a band on the same reasoning as the old masthead: full height is
+  40vw, so 24vw shows a constant 60% at every width and the logo — which sits
+  inside the middle 29-72% — never clips. Under 720px the crop is dropped,
+  because a narrow viewport eats the sides where the logo lives.
+*/}
+<div class="signoff">
+  <Image
+    src={banner}
+    alt=""
+    widths={[640, 960, 1280, 1600, 1983]}
+    sizes="100vw"
+    loading="lazy"
+    class="signoff-img"
+  />
+</div>
 
 <footer>
   <div class="inner">
@@ -9,10 +40,14 @@ import { contactUrl, contactLabel, links } from '../site.config';
     <div class="line">
       <a href={contactUrl}>{contactLabel}</a>
       <span class="sep" aria-hidden="true">·</span>
-      <a href={links.source}>Source on GitHub</a>
+      <a href={links.source}>Project on GitHub</a>
     </div>
 
-    <div class="line-quiet">Windows only · Free — no payments, ever.</div>
+    <div class="line-credit">
+      Made with ❤️ by <a href="https://github.com/officialasit" target="_blank" rel="noopener" aria-label="Asit Joshi on GitHub (opens in new tab)">Asit Joshi</a>
+    </div>
+
+    <div class="line-quiet">Windows · Steam · Free — no payments, ever.</div>
 
     <p class="disclaimer">
       Extra Cover is an unofficial fan project. It is not affiliated with, endorsed by,
@@ -22,16 +57,31 @@ import { contactUrl, contactLabel, links } from '../site.config';
 </footer>
 
 <style>
+  .signoff {
+    width: 100%;
+    line-height: 0;                       /* kills the inline-descender gap */
+    border-top: 2px solid var(--red);     /* the join is a decision, not a seam */
+  }
+  .signoff-img {
+    display: block;
+    width: 100%;
+    height: max(180px, min(24vw, 52vh));
+    object-fit: cover;
+    object-position: center;
+  }
+  @media (max-width: 720px) {
+    .signoff-img { height: auto; }
+  }
+
   footer {
     width: 100%;
-    border-top: 1px solid var(--line-faint);
     background: var(--bg-footer);
   }
 
   .inner {
-    max-width: 1000px;
+    max-width: var(--measure);
     margin: 0 auto;
-    padding: 48px 24px 56px;
+    padding: 48px var(--pad-x) 56px;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -39,18 +89,52 @@ import { contactUrl, contactLabel, links } from '../site.config';
     align-items: center;
   }
 
-  .line-strong { font-size: 16px; font-weight: 600; color: var(--ink); }
-  .line        { font-size: 14px; color: var(--ink-2); }
-  .line-quiet  { font-size: 13px; color: var(--ink-3); }
+  .line-strong {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: var(--t-md);
+    letter-spacing: 0.01em;
+    color: var(--ink);
+  }
+  .line { font-size: var(--t-sm); color: var(--ink-2); }
+  .line a { display: inline-block; padding: 6px 2px; }
 
-  .sep { color: var(--ink-4); margin: 0 8px; }
+  .line-credit {
+    font-size: var(--t-sm);
+    color: var(--ink-2);
+  }
+  .line-credit a {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .line-credit a:hover {
+    color: var(--red-bright);
+    text-decoration: underline;
+  }
+
+  /* The two smallest lines are terms, not prose — same data face as the
+     scoreboard strip they answer to. */
+  .line-quiet {
+    font-family: var(--font-mono);
+    font-size: var(--t-2xs);
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .sep { color: var(--ink-3); margin: 0 8px; }
 
   .disclaimer {
-    margin: 0;
-    font-size: 12.5px;
-    color: var(--ink-4);
-    max-width: 560px;
-    line-height: 1.6;
+    margin: 4px 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--t-xs);
+    font-weight: 400;
+    color: var(--ink-3);
+    max-width: 620px;
+    line-height: 1.75;
     text-wrap: pretty;
   }
 </style>
