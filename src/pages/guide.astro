@@ -1,0 +1,215 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Footer from '../components/Footer.astro';
+import logo from '../assets/logo.png';
+import { links } from '../site.config';
+
+const base = import.meta.env.BASE_URL;
+
+const steps = [
+  {
+    name: 'Download the installer',
+    text: `Grab the latest release from GitHub. It's an unsigned installer — Extra
+           Cover is a free fan project, and code-signing certificates cost a few
+           hundred dollars a year the project doesn't have.`,
+  },
+  {
+    name: '"Windows protected your PC"? That’s expected.',
+    text: `SmartScreen flags any unsigned installer, not just this one. Click
+           More info, then Run anyway. If you'd rather verify first, every
+           release publishes a SHA-512 checksum for the installer alongside it.`,
+  },
+  {
+    name: 'Let it find your game',
+    text: `On first launch, Extra Cover scans the Windows Registry and your Steam
+           library folders for Cricket 26 automatically. If it can't find it —
+           a non-default install location, usually — you can point it at the
+           folder yourself.`,
+  },
+  {
+    name: 'Import or pick a pack',
+    text: `Bring in a .c26pack from someone else, or build your own with the
+           built-in Pack Studio. Every pack is checked for a valid manifest
+           before it's added to your library.`,
+  },
+  {
+    name: 'Apply it',
+    text: `One click. Extra Cover backs up every original file it's about to
+           touch before changing anything, so removal is a clean revert, not a
+           guess. Several packs can be applied at once as long as they don't
+           claim the same assets.`,
+  },
+  {
+    name: 'Launch Cricket 26',
+    text: `That's it — the mod is live. Remove one pack any time from the same
+           screen you installed it from, and the others stay exactly as they
+           were.`,
+  },
+];
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'How to install mods for Cricket 26 with Extra Cover',
+  description:
+    'Step-by-step guide to installing, applying, and removing Cricket 26 mods using Extra Cover.',
+  step: steps.map((s) => ({
+    '@type': 'HowToStep',
+    name: s.name,
+    text: s.text.replace(/\s+/g, ' ').trim(),
+  })),
+};
+---
+
+<Base
+  title="Installation Guide — Extra Cover"
+  description="How to install Cricket 26 mods with Extra Cover: download, get past SmartScreen, auto-detect your Steam install, and apply a pack in one click."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+
+  <header class="g-header">
+    <div class="g-header-inner">
+      <a class="g-brand" href={base} aria-label="Extra Cover — home">
+        <Image src={logo} alt="Extra Cover" widths={[280, 420]} sizes="150px" loading="eager" class="g-logo" />
+      </a>
+      <a class="g-back" href={base}>&larr; Back to Extra Cover</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="section intro">
+      <div class="eyebrow">Get Started</div>
+      <h1 class="h-display section-title">Installing Cricket 26 mods, step by step</h1>
+      <p class="lead">
+        No Blobset Tools, no manual file editing. Six steps, most of them one click.
+      </p>
+    </section>
+
+    <section class="section steps-section" aria-label="Installation steps">
+      <ol class="steps">
+        {steps.map((step, i) => (
+          <li class="step">
+            <span class="idx" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <div class="step-body">
+              <h2 class="step-name">{step.name}</h2>
+              <p class="step-text">{step.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <p class="more">
+        Something not covered here? <a href={links.issues}>Ask on GitHub</a> —
+        or see the <a href={`${base}#faq`}>FAQ</a> for safety, ban-risk, and
+        game-patch questions.
+      </p>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .g-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    background: rgba(28, 29, 34, 0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .g-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 16px 24px;
+  }
+  .g-brand { display: flex; align-items: center; }
+  .g-logo { width: 145px; height: auto; mix-blend-mode: screen; }
+  .g-back {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--ink-2);
+  }
+  .g-back:hover { color: var(--red-bright); text-decoration: none; }
+
+  .page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .intro { padding-bottom: 8px; max-width: 720px; text-align: left; }
+  .lead {
+    margin: 18px 0 0;
+    font-size: var(--t-md);
+    color: var(--ink-2);
+    line-height: 1.6;
+    max-width: 56ch;
+  }
+
+  .steps-section { padding-top: 24px; }
+
+  .steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--line);
+  }
+
+  .step {
+    display: flex;
+    gap: 24px;
+    padding: 28px 4px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .idx {
+    flex: 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: var(--t-sm);
+    font-weight: 700;
+    color: var(--red-bright);
+    padding-top: 2px;
+  }
+
+  .step-name {
+    margin: 0 0 8px;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--t-md);
+    font-weight: 700;
+    color: var(--ink);
+    text-transform: none;
+  }
+
+  .step-text {
+    margin: 0;
+    max-width: 68ch;
+    font-size: var(--t-base);
+    line-height: 1.7;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+
+  .more {
+    margin: 32px 0 0;
+    font-family: var(--font-mono);
+    font-size: var(--t-xs);
+    letter-spacing: 0.03em;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 640px) {
+    .step { gap: 16px; padding: 22px 4px; }
+  }
+</style>

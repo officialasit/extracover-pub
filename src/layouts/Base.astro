@@ -30,6 +30,23 @@ const { title, description } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(`${base}og-banner.png`, Astro.site);
+
+// SoftwareApplication structured data. Same purpose as the FAQ schema in
+// Faq.astro: this is what answer engines (Google AI Overviews, ChatGPT,
+// Perplexity) and rich-result cards pull "what is this / what does it cost /
+// what platform" from, rather than having to infer it from prose.
+const appSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Extra Cover',
+  applicationCategory: 'UtilitiesApplication',
+  operatingSystem: 'Windows',
+  description:
+    'One-click mod tool for Cricket 26 on Steam/PC. Apply stadium textures, broadcast HUD overlays, and visual asset packs without technical knowledge, and create your own packs with the built-in Pack Studio.',
+  url: new URL(base, Astro.site).toString(),
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  sameAs: ['https://github.com/officialasit/extracover-pub'],
+};
 ---
 
 <!DOCTYPE html>
@@ -40,7 +57,7 @@ const ogImage = new URL(`${base}og-banner.png`, Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#08080a" />
+    <meta name="theme-color" content="#1c1d22" />
     <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
 
 
@@ -53,6 +70,7 @@ const ogImage = new URL(`${base}og-banner.png`, Astro.site);
       alt text is there because the card carries the entire pitch as pixels.
     */}
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="Extra Cover" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -63,8 +81,13 @@ const ogImage = new URL(`${base}og-banner.png`, Astro.site);
     <meta property="og:image:alt"
           content="Extra Cover — Mod Cricket 26 in 1 Click. Visual assets, stadium textures, HUD overlays. Free and open source for Windows and Steam." />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt"
           content="Extra Cover — Mod Cricket 26 in 1 Click. Free and open source." />
+
+    <script type="application/ld+json" set:html={JSON.stringify(appSchema)} />
   </head>
 
   <body>

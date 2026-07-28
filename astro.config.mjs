@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 // GitHub Pages serves a *project* site under /<repo>/, not at the domain root,
 // so `base` has to match the repo name or every asset URL 404s once deployed
@@ -13,11 +14,11 @@ export default defineConfig({
   site: 'https://officialasit.github.io',
   base: '/extracover-pub/',
   trailingSlash: 'ignore',
-  build: {
-    // Emit `about.html` rather than `about/index.html`. Simpler to reason about
-    // on a static host, and irrelevant while this is a single page.
-    format: 'file',
-  },
+  integrations: [sitemap()],
+  // Default 'directory' format (guide/index.html, served at /guide/) now that
+  // there's more than one page — clean extensionless URLs, and it keeps
+  // Astro.url.pathname (used for the canonical tag) matching what's actually
+  // served instead of diverging from a `.html`-suffixed file.
   image: {
     // The hero art is a 1.7 MB PNG. Astro's sharp pipeline re-encodes it to
     // WebP at the sizes actually used, which is the single biggest win on this

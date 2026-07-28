@@ -1,14 +1,14 @@
 :root {
   /* Surfaces */
-  --bg:           #08080a;
-  --bg-footer:    #050507;
-  --surface:      #121217;
-  --surface-card: #16161e;
-  --input-bg:     #14141c;
+  --bg:           #1c1d22;
+  --bg-footer:    #141519;
+  --surface:      #26272e;
+  --surface-card: #2d2e36;
+  --input-bg:     #28292f;
 
   /* Lines */
-  --line:         #22222d;
-  --line-2:       #2e2e3d;
+  --line:         #383a45;
+  --line-2:       #494b57;
   --line-glow:    rgba(240, 62, 62, 0.3);
 
   /* Ink */
@@ -49,7 +49,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  background-color: #08080a;
+  background-color: #1c1d22;
   background-image:
     radial-gradient(ellipse 90% 50% at 50% -5%, rgba(220, 38, 38, 0.2) 0%, transparent 70%),
     radial-gradient(ellipse 55% 35% at 5% 42%, rgba(220, 38, 38, 0.09) 0%, transparent 65%),

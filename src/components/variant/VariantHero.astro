@@ -3,17 +3,33 @@ import { Image } from 'astro:assets';
 import logo from '../../assets/logo.png';
 import { subscribeEndpoint, showDownloadCta, links, launchWindow } from '../../site.config';
 
+const base = import.meta.env.BASE_URL;
+
+// Tabler Icons (MIT) for the UI glyphs, Simple Icons (CC0) for the Steam mark
+// — self-hosted as literal inline markup, same as everywhere else in this
+// codebase avoids a runtime dependency or CDN request for an icon set.
 const icon = {
-  shield: `<path d="M12 2.6 4.6 5.6v5.9c0 4.4 3.1 8.5 7.4 9.9 4.3-1.4 7.4-5.5 7.4-9.9V5.6L12 2.6Z"/>
-           <path d="m8.7 11.9 2.4 2.4 4.2-4.5"/>`,
-  cursor: `<path d="M5.6 3.4 17.8 11.1l-5.1.8 2.9 5.4-2.3 1.3-2.9-5.4-3.5 3.8Z"/>`,
-  tag:    `<path d="M3.6 11.2V4.3a.7.7 0 0 1 .7-.7h6.9c.2 0 .4.1.5.2l8 8a.7.7 0 0 1 0 1l-6.9 6.9a.7.7 0 0 1-1 0l-8-8a.7.7 0 0 1-.2-.5Z"/>
-           <circle cx="7.7" cy="7.7" r="1.3"/>`,
-  steam:  `<circle cx="12" cy="12" r="9.6"/>
-           <circle cx="15.2" cy="8.8" r="3.9"/>
-           <circle cx="15.2" cy="8.8" r="1.45" fill="currentColor" stroke="none"/>
-           <circle cx="7.6" cy="15.6" r="2.1"/>
-           <path d="M9.2 14.2 12.3 11.4"/>`,
+  // tabler: shield-check
+  shield: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+             <path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06"/>
+             <path d="M15 19l2 2l4 -4"/>
+           </svg>`,
+  // tabler: click
+  cursor: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+             <path d="M3 12l3 0"/><path d="M12 3l0 3"/>
+             <path d="M7.8 7.8l-2.2 -2.2"/><path d="M16.2 7.8l2.2 -2.2"/>
+             <path d="M7.8 16.2l-2.2 2.2"/>
+             <path d="M12 12l9 3l-4 2l-2 4l-3 -9"/>
+           </svg>`,
+  // tabler: tag
+  tag:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+             <path d="M6.5 7.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/>
+             <path d="M3 6v5.172a2 2 0 0 0 .586 1.414l7.71 7.71a2.41 2.41 0 0 0 3.408 0l5.592 -5.592a2.41 2.41 0 0 0 0 -3.408l-7.71 -7.71a2 2 0 0 0 -1.414 -.586h-5.172a3 3 0 0 0 -3 3"/>
+           </svg>`,
+  // simple-icons: steam
+  steam:  `<svg viewBox="0 0 24 24" fill="currentColor">
+             <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/>
+           </svg>`,
 };
 
 const terms = [
@@ -34,6 +50,7 @@ const terms = [
       <a class="v-nav-link" href="#pack-studio">Pack Studio</a>
       <a class="v-nav-link" href="#how-it-works">How It Works</a>
       <a class="v-nav-link" href="#faq">FAQ</a>
+      <a class="v-nav-link" href={`${base}guide/`}>Guide</a>
     </nav>
     <a class="v-cta-btn" href={links.source} target="_blank" rel="noopener" aria-label="View project on GitHub (opens in new tab)">GitHub ↗</a>
   </div>
@@ -83,9 +100,7 @@ const terms = [
     <dl class="v-terms">
       {terms.map((t) => (
         <div class="v-term">
-          <svg class="v-term-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
-               aria-hidden="true" set:html={t.icon} />
+          <span class="v-term-icon" aria-hidden="true" set:html={t.icon} />
           <div class="v-term-text">
             <dt>{t.label}</dt>
             <dd>{t.value}</dd>
@@ -102,7 +117,7 @@ const terms = [
     top: 0;
     z-index: 100;
     width: 100%;
-    background: rgba(8, 8, 10, 0.88);
+    background: rgba(28, 29, 34, 0.88);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
@@ -306,6 +321,7 @@ const terms = [
   }
   .v-term:first-child { border-left: none; }
   .v-term-icon { width: 20px; height: 20px; color: var(--ink-2); flex: 0 0 auto; }
+  .v-term-icon :global(svg) { width: 100%; height: 100%; display: block; }
   .v-term dt { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.12em; }
   .v-term dd { margin: 2px 0 0; font-size: 14px; font-weight: 600; color: var(--ink); }
 
