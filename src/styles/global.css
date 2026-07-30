@@ -114,6 +114,23 @@ img { max-width: 100%; height: auto; }
   color: var(--ink);
 }
 
+/* Scroll-triggered reveal for below-the-fold sections (wired up by the inline
+   script in Base.astro). Defaults to fully visible so a no-JS load, a crawler,
+   or a script failure never leaves a section stuck hidden — the script only
+   ever *adds* the animated-in behavior on top of this default. `is-skipped`
+   covers a section already in view on first paint (short page, tall viewport,
+   scroll-restoration on refresh): same end state, no transition. The reduced-
+   motion block below already zeroes this transition's duration via the `*`
+   selector, so there is no separate guard needed here. */
+.reveal { opacity: 1; transform: none; }
+.reveal.reveal-pending { opacity: 0; transform: translateY(8px); }
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  transition: opacity 350ms ease-out, transform 350ms ease-out;
+}
+.reveal.is-skipped { opacity: 1; transform: none; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

@@ -97,7 +97,7 @@ const terms = [
     </div>
 
     <!-- Scorecard Metagrid Ticker Bar -->
-    <dl class="v-terms">
+    <dl class="v-terms reveal">
       {terms.map((t) => (
         <div class="v-term">
           <span class="v-term-icon" aria-hidden="true" set:html={t.icon} />
@@ -333,4 +333,32 @@ const terms = [
     .v-term:nth-child(-n+2) { border-bottom: 1px solid var(--line-2); }
     .v-term:nth-child(odd) { border-left: none; }
   }
+
+  /* Below ~480px, "Pack Studio / Create & Share" and "Runs on / Windows ·
+     Steam" wrap to two lines inside a 2-column cell while the other two
+     terms stay on one — the row heights mismatch and the wrapped text
+     crowds the icon. One column gives every term the full row width. */
+  @media (max-width: 480px) {
+    .v-terms { grid-template-columns: 1fr; }
+    .v-term { border-left: none !important; border-bottom: 1px solid var(--line-2); }
+    .v-term:last-child { border-bottom: none; }
+  }
 </style>
+
+<script>
+  // With no PUBLIC_SUBSCRIBE_ENDPOINT configured at build time, the form has
+  // no `action` — a real submit POSTs to the current URL, which GitHub Pages
+  // can't handle, and the typed email is lost with zero feedback. The markup
+  // already carries a hidden #signup-v-msg for exactly this case; this is
+  // the wiring that was missing. When an endpoint *is* configured, data-endpoint
+  // is non-empty and this listener steps aside so the real POST goes through.
+  const form = document.getElementById('signup-variant') as HTMLFormElement | null;
+  const msg = document.getElementById('signup-v-msg');
+  if (form && msg && !form.dataset.endpoint) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      msg.hidden = false;
+      msg.textContent = "Signup isn't open yet — check back after launch.";
+    });
+  }
+</script>

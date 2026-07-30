@@ -94,3 +94,43 @@ const appSchema = {
     <slot />
   </body>
 </html>
+
+<script>
+  // Scroll-triggered reveal for below-the-fold sections marked `.reveal` in
+  // markup (see global.css for the fail-open default: fully visible unless this
+  // script itself adds `reveal-pending`). Wrapped so a script error or missing
+  // IntersectionObserver leaves every section in that default visible state
+  // rather than stuck hidden.
+  try {
+    const targets = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window && targets.length) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            const el = entry.target;
+            if (entry.isIntersecting) {
+              el.classList.remove('reveal-pending');
+              el.classList.add(el.dataset.revealSeen ? 'is-visible' : 'is-skipped');
+              observer.unobserve(el);
+            }
+          }
+        },
+        { threshold: 0.15 }
+      );
+      targets.forEach((el) => {
+        // First callback fires immediately with the element's current state —
+        // if it's already on screen at load, mark it seen-but-skip-animation
+        // by NOT adding reveal-pending, so it never becomes hidden at all.
+        const rect = el.getBoundingClientRect();
+        const alreadyVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        if (!alreadyVisible) {
+          el.dataset.revealSeen = 'true';
+          el.classList.add('reveal-pending');
+        }
+        observer.observe(el);
+      });
+    }
+  } catch {
+    // Fail open — do nothing, .reveal's default CSS state is already visible.
+  }
+</script>
