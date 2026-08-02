@@ -32,11 +32,13 @@ const W = 1200;
 const H = 630;
 const PAD = 82;
 
-const BG    = '#0d0d0f';
-const INK   = '#f2f2f0';
-const INK_2 = '#b9b9bf';
-const INK_3 = '#8b8b93';
-const RED   = '#e02b2b';
+// Same tokens as src/styles/global.css, so the card and the page it opens read
+// as one product rather than two.
+const BG    = '#09090b';
+const INK   = '#fafafa';
+const INK_2 = '#a1a1aa';
+const INK_3 = '#71717a';
+const RED   = '#e11d48';
 
 const LOGO_W = 380;
 
@@ -50,6 +52,13 @@ const terms = [
   ['INSTALL',   '1 click'],
   ['RUNS ON',   'Windows · Steam'],
 ];
+
+// The headline is the hero's, verbatim. Two places now say the same sentence;
+// they are the two places a first-time visitor sees, and they should not
+// disagree about what this is.
+const HEAD_1 = 'MOD CRICKET 26';
+const HEAD_2 = 'IN 1 CLICK.';
+const SUB    = 'Stadium textures, broadcast HUDs, and a built-in Pack Studio.';
 
 // Absolute baselines rather than offsets chained off other offsets. The first
 // version derived the divider from the terms block and the sub-headline from
@@ -73,20 +82,20 @@ const termCells = terms
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">
   <style>
-    .h  { font: 800 italic 62px "Segoe UI", "DejaVu Sans", sans-serif; fill: ${INK}; letter-spacing: -0.5px; }
+    .h  { font: 700 62px "Segoe UI", "DejaVu Sans", sans-serif; fill: ${INK}; letter-spacing: -1.6px; }
     .s  { font: 400 27px "Segoe UI", "DejaVu Sans", sans-serif; fill: ${INK_2}; }
     .tl { font: 600 15px "Consolas", "DejaVu Sans Mono", monospace; fill: ${INK_3}; letter-spacing: 2.4px; }
     .tv { font: 600 24px "Segoe UI", "DejaVu Sans", sans-serif; fill: ${INK}; }
-    .rule { stroke: #232329; stroke-width: 1; }
+    .rule { stroke: #1f1f23; stroke-width: 1; }
   </style>
 
   <rect width="${W}" height="${H}" fill="${BG}"/>
   <rect width="${W}" height="6" fill="${RED}"/>
 
-  <text x="${PAD}" y="${Y_HEAD_1}" class="h">MAKE CRICKET 26 SOUND</text>
-  <text x="${PAD}" y="${Y_HEAD_2}" class="h">LIKE A FULL HOUSE.</text>
+  <text x="${PAD}" y="${Y_HEAD_1}" class="h">${esc(HEAD_1)}</text>
+  <text x="${PAD}" y="${Y_HEAD_2}" class="h">${esc(HEAD_2)}</text>
 
-  <text x="${PAD}" y="${Y_SUB}" class="s">No Blobset Tools, no tutorials — one click on, one click off.</text>
+  <text x="${PAD}" y="${Y_SUB}" class="s">${esc(SUB)}</text>
 
   <line x1="${PAD}" y1="${Y_RULE}" x2="${W - PAD}" y2="${Y_RULE}" class="rule"/>
   ${termCells}

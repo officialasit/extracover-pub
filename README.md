@@ -27,12 +27,18 @@ GitHub project site is served from a subpath. Get this wrong and every asset
 404s in production while working perfectly in `astro dev`. It must match the
 repo name.
 
-**Images.** The hero PNG is 1.7 MB; Astro's sharp pipeline emits WebP at the
-widths actually rendered, taking it to 9–63 kB. The social card is generated at
-build time from the same source rather than committed, so it cannot drift.
+**Images.** The only image on the page is the lockup in the nav; Astro's sharp
+pipeline emits WebP at the widths actually rendered (92 kB PNG → 3–8 kB). The
+social card is generated at build time from that same lockup rather than
+committed, so it cannot drift from the site's palette or pitch.
 
-**Fonts** are self-hosted via `@fontsource` rather than fetched from a CDN — no
-third-party request on the critical path.
+**Fonts** (Inter, JetBrains Mono) are self-hosted via `@fontsource` rather than
+fetched from a CDN — no third-party request on the critical path.
+
+**Motion.** The design called for Lenis + GSAP loaded from a CDN. The same
+scroll reveals come from one `IntersectionObserver` in `Base.astro` plus CSS
+transitions, and anchor scrolling from native `scroll-behavior: smooth` — no
+third-party JS, and it fails open: without JS every section renders visible.
 
 **The waitlist form has no endpoint yet.** GitHub Pages is static, so there is
 nothing to receive a POST. Rather than show a fake success message it tells

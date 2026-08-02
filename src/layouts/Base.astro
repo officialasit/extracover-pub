@@ -5,17 +5,14 @@
 // wherever fonts.googleapis.com doesn't.
 //
 // Only the weights the design actually uses:
-//   Exo 2       — italic 800 (section heads)
-//   Saira       — 400/500/600/700 (body)
-//   Azeret Mono — 400/500/700 (labels, figures, the scoreboard strip)
-import '@fontsource/exo-2/latin-800-italic.css';
-import '@fontsource/saira/latin-400.css';
-import '@fontsource/saira/latin-500.css';
-import '@fontsource/saira/latin-600.css';
-import '@fontsource/saira/latin-700.css';
-import '@fontsource/azeret-mono/latin-400.css';
-import '@fontsource/azeret-mono/latin-500.css';
-import '@fontsource/azeret-mono/latin-700.css';
+//   Inter          — 400/500/600/700 (everything)
+//   JetBrains Mono — 400/500 (labels, version strings, status chips)
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import '@fontsource/inter/latin-600.css';
+import '@fontsource/inter/latin-700.css';
+import '@fontsource/jetbrains-mono/latin-400.css';
+import '@fontsource/jetbrains-mono/latin-500.css';
 import '../styles/global.css';
 
 interface Props {
@@ -57,7 +54,7 @@ const appSchema = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#1c1d22" />
+    <meta name="theme-color" content="#09090b" />
     <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
 
 
@@ -79,7 +76,7 @@ const appSchema = {
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt"
-          content="Extra Cover — Mod Cricket 26 in 1 Click. Visual assets, stadium textures, HUD overlays. Free and open source for Windows and Steam." />
+          content="Extra Cover — Mod Cricket 26 in 1 click. Stadium textures, broadcast HUDs, and a built-in Pack Studio. Free and open source for Windows and Steam." />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
