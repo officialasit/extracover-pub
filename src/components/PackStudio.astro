@@ -1,0 +1,154 @@
+---
+const tools = [
+  { title: 'One-click exporter', body: 'Turn your textures and assets into a ready-to-share .c26pack' },
+  { title: 'Manifest editor',    body: 'Add your name, version, and description so people know who made it' },
+  { title: 'Integrity check',    body: 'Validate the pack structure before you share it' },
+];
+
+const anatomy = [
+  { code: 'manifest.json', desc: 'Author, version, description' },
+  { code: 'textures/',     desc: 'Stadium boards, pitch, outfield art' },
+  { code: 'overlays/',     desc: 'Scorebugs, broadcast graphics' },
+  { code: 'preview.png',   desc: 'Thumbnail shown in the browser' },
+];
+---
+
+<section class="studio" id="studio">
+  <div class="studio-inner">
+    <div>
+      <div class="section-label">Pack Studio</div>
+      <h2 class="section-title">Don’t just install mods.<br />Make them.</h2>
+      <p class="section-desc studio-desc">
+        Built-in tools to create, package, and share your own visual packs with the community.
+      </p>
+
+      <ol class="studio-list">
+        {tools.map((tool, i) => (
+          <li class="studio-item reveal" style={`--reveal-delay:${i * 70}ms`}>
+            <span class="studio-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{tool.title}</h3>
+              <p>{tool.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="anatomy reveal">
+      <h3 class="anatomy-label">What’s inside a .c26pack</h3>
+      {anatomy.map((row) => (
+        <div class="anatomy-row">
+          <code class="anatomy-code">{row.code}</code>
+          <span class="anatomy-desc">{row.desc}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .studio {
+    background: var(--bg-elevated);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .studio-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 112px var(--pad-x);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: start;
+  }
+
+  .studio-desc { margin-bottom: 0; }
+
+  .studio-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 36px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .studio-item {
+    display: flex;
+    gap: 14px;
+    padding: 15px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color 0.25s ease, translate 0.25s ease, background 0.25s ease;
+  }
+  .studio-item:hover {
+    border-color: rgba(225, 29, 72, 0.22);
+    translate: 4px 0;
+    background: #18181d;
+  }
+
+  .studio-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+    width: 22px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+
+  .studio-item h3 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .studio-item p  { font-size: 13px; color: var(--text-3); text-wrap: pretty; }
+
+  .anatomy {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 26px;
+  }
+
+  .anatomy-label {
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 18px;
+  }
+
+  .anatomy-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .anatomy-row:last-child { border-bottom: none; }
+
+  .anatomy-code {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--green);
+    background: var(--green-soft);
+    padding: 4px 8px;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
+
+  .anatomy-desc { font-size: 13px; color: var(--text-2); }
+
+  @media (max-width: 900px) {
+    .studio-inner { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  @media (max-width: 600px) {
+    .studio-inner { padding: 80px 16px; }
+    /* Filename chip + description stack rather than squeezing the description
+       into the ~90px left over next to `manifest.json`. */
+    .anatomy-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+  }
+</style>

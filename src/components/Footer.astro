@@ -1,144 +1,86 @@
 ---
-import { Image } from 'astro:assets';
-import banner from '../assets/banner.png';
 import { contactUrl, contactLabel, links } from '../site.config';
 
 const base = import.meta.env.BASE_URL;
+
+interface Props {
+  /** Section anchors only resolve on the landing page. */
+  sections?: boolean;
+}
+const { sections = true } = Astro.props;
+const to = (hash: string) => (sections ? hash : `${base}${hash}`);
 ---
 
-{/*
-  The banner art, back — as a closing band rather than the masthead it used to
-  be. Two reasons it works here and did not there. It is the only cricket
-  imagery on the page: floodlights, an empty stand, a red ball mid-seam, which
-  is precisely the atmosphere the product sells and which a page of dark panels
-  and mono labels cannot convey on its own. And at the end of a page a large
-  image is a reward, where at the top it was an obstacle between the reader and
-  the pitch.
-
-  This is the app's dark variant of the same artwork, not the white one that
-  opened the page before. Same lockup, same composition, on a ground that
-  belongs on this background instead of a bright slab that fought it.
-
-  Cropped to a band on the same reasoning as the old masthead: full height is
-  40vw, so 24vw shows a constant 60% at every width and the logo — which sits
-  inside the middle 29-72% — never clips. Under 720px the crop is dropped,
-  because a narrow viewport eats the sides where the logo lives.
-*/}
-<div class="signoff">
-  <Image
-    src={banner}
-    alt=""
-    widths={[640, 960, 1280, 1600, 1983]}
-    sizes="100vw"
-    loading="lazy"
-    class="signoff-img"
-  />
-</div>
-
-<footer class="reveal">
-  <div class="inner">
-    <div class="line-strong">Built by a fan, for fans.</div>
-
-    <div class="line">
-      <a href={`${base}guide/`}>Installation Guide</a>
-      <span class="sep" aria-hidden="true">·</span>
-      <a href={contactUrl}>{contactLabel}</a>
-      <span class="sep" aria-hidden="true">·</span>
-      <a href={links.source}>Project on GitHub</a>
-    </div>
-
-    <div class="line-credit">
-      Made with ❤️ by <a href="https://github.com/officialasit" target="_blank" rel="noopener" aria-label="Asit Joshi on GitHub (opens in new tab)">Asit Joshi</a>
-    </div>
-
-    <div class="line-quiet">Windows · Steam · Free — no payments, ever.</div>
-
-    <p class="disclaimer">
-      Extra Cover is an unofficial fan project. It is not affiliated with, endorsed by,
-      or connected to Big Ant Studios, Cricket 26, or the Indian Premier League.
-    </p>
+<footer class="footer">
+  <div class="footer-links">
+    <a href={links.source} target="_blank" rel="noopener">GitHub</a>
+    <a href={contactUrl}>{contactLabel}</a>
+    <a href={`${base}guide/`}>Guide</a>
+    <a href={to('#features')}>Features</a>
+    <a href={to('#faq')}>FAQ</a>
   </div>
+
+  <p class="footer-meta">
+    Made with care by
+    <a href="https://github.com/officialasit" target="_blank" rel="noopener"
+       aria-label="Asit Joshi on GitHub (opens in new tab)">Asit Joshi</a>
+    · Built by a fan, for fans
+  </p>
+  <p class="footer-meta quiet">Windows · Steam · Free — no payments, ever.</p>
+
+  <p class="footer-disclaimer">
+    Extra Cover is an unofficial fan project. Not affiliated with, endorsed by, or connected to
+    Big Ant Studios, Cricket 26, or the Indian Premier League.
+  </p>
 </footer>
 
 <style>
-  .signoff {
-    width: 100%;
-    line-height: 0;                       /* kills the inline-descender gap */
-    border-top: 2px solid var(--red);     /* the join is a decision, not a seam */
-  }
-  .signoff-img {
-    display: block;
-    width: 100%;
-    height: max(180px, min(24vw, 52vh));
-    object-fit: cover;
-    object-position: center;
-  }
-  @media (max-width: 720px) {
-    .signoff-img { height: auto; }
-  }
-
-  footer {
-    width: 100%;
-    background: var(--bg-footer);
-  }
-
-  .inner {
-    max-width: var(--measure);
-    margin: 0 auto;
-    padding: 48px var(--pad-x) 56px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+  .footer {
+    padding: 40px var(--pad-x) 56px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-elevated);
     text-align: center;
-    align-items: center;
   }
 
-  .line-strong {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-weight: 800;
-    text-transform: uppercase;
-    font-size: var(--t-md);
-    letter-spacing: 0.01em;
-    color: var(--ink);
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
   }
-  .line { font-size: var(--t-sm); color: var(--ink-2); }
-  .line a { display: inline-block; padding: 6px 2px; }
+  .footer-links a {
+    font-size: 13.5px;
+    color: var(--text-3);
+    transition: color 0.2s ease;
+  }
+  .footer-links a:hover { color: var(--text); text-decoration: none; }
 
-  .line-credit {
-    font-size: var(--t-sm);
-    color: var(--ink-2);
+  .footer-meta {
+    font-size: 13px;
+    color: var(--text-4);
+    margin-bottom: 6px;
   }
-  .line-credit a {
-    color: var(--ink);
-    font-weight: 600;
-  }
-  .line-credit a:hover {
-    color: var(--red-bright);
-    text-decoration: underline;
-  }
+  .footer-meta a { color: var(--text-3); }
+  .footer-meta a:hover { color: var(--text); text-decoration: none; }
 
-  /* The two smallest lines are terms, not prose — same data face as the
-     scoreboard strip they answer to. */
-  .line-quiet {
-    font-family: var(--font-mono);
-    font-size: var(--t-2xs);
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-3);
+  .footer-meta.quiet {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
   }
 
-  .sep { color: var(--ink-3); margin: 0 8px; }
-
-  .disclaimer {
-    margin: 4px 0 0;
-    font-family: var(--font-mono);
-    font-size: var(--t-xs);
-    font-weight: 400;
-    color: var(--ink-3);
-    max-width: 620px;
-    line-height: 1.75;
+  .footer-disclaimer {
+    font-size: 12px;
+    color: var(--text-4);
+    max-width: 460px;
+    margin: 14px auto 0;
+    line-height: 1.6;
     text-wrap: pretty;
+  }
+
+  @media (max-width: 600px) {
+    .footer { padding: 36px 16px 48px; }
+    .footer-links { gap: 16px 20px; }
   }
 </style>
