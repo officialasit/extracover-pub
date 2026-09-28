@@ -1,0 +1,8 @@
+---
+const { large = false } = Astro.props;
+const icon = `${import.meta.env.BASE_URL}images/brand-icon-small.webp`;
+---
+<span class:list={['brand', { 'brand-large': large }]}>
+  <img src={icon} width="27" height="27" alt="" aria-hidden="true" />
+  <span>Extra Cover</span>
+</span>

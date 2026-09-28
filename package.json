@@ -1,19 +1,25 @@
 {
-  "name": "extra-cover-web",
+  "name": "extra-cover-landing",
   "private": true,
+  "version": "0.0.1",
   "type": "module",
-  "description": "Landing page for Extra Cover — deployed to GitHub Pages",
   "scripts": {
-    "dev": "astro dev",
+    "sync:brand": "node scripts/sync-brand.mjs",
+    "prepare:social": "node scripts/prepare-social-image.mjs",
+    "prepare:images": "node scripts/prepare-delivery-images.mjs",
+    "check:seo": "node scripts/check-seo.mjs",
+    "dev": "astro dev --host 127.0.0.1 --port 4321",
     "build": "astro build",
-    "preview": "astro preview",
-    "check": "astro check"
+    "preview": "astro preview --host 127.0.0.1 --port 4321"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.3",
-    "@fontsource/inter": "^5.3.0",
-    "@fontsource/jetbrains-mono": "^5.3.0",
-    "astro": "^5.6.1",
-    "sharp": "^0.34.1"
+    "@tabler/icons": "^3.46.0",
+    "astro": "^7.3.1",
+    "motion": "^13.2.0",
+    "photoswipe": "^5.4.4"
+  },
+  "devDependencies": {
+    "lighthouse": "^13.4.1",
+    "playwright": "^1.63.0"
   }
 }

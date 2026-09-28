@@ -1,0 +1,202 @@
+---
+import Brand from '../components/Brand.astro';
+import Icon from '../components/Icon.astro';
+import '../styles/style-lab.css';
+
+const base = import.meta.env.BASE_URL;
+const img = (name: string) => `${base}images/${name}`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Four minimal visual directions for the Extra Cover landing page." />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#eceef0" />
+    <title>Extra Cover landing page style lab</title>
+    <link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml" />
+    <link rel="preload" as="font" href={`${base}fonts/manrope-latin-800-normal.woff2`} type="font/woff2" crossorigin />
+  </head>
+  <body>
+    <a class="lab-skip" href="#directions">Skip to design directions</a>
+
+    <header class="lab-header">
+      <a href={base} class="lab-home" aria-label="Return to the current Extra Cover landing page">
+        <Icon name="arrow-left" size={16} />
+        Current landing page
+      </a>
+      <span>Landing page style lab</span>
+    </header>
+
+    <main>
+      <section class="lab-intro" aria-labelledby="lab-title">
+        <div>
+          <p class="lab-kicker">Four minimal directions</p>
+          <h1 id="lab-title">Same product.<br />Different character.</h1>
+        </div>
+        <div class="lab-intro-copy">
+          <p>Each direction uses the same core message, imagery and action. Compare the visual language, not the content.</p>
+          <div class="lab-legend" aria-label="Prototype scope">
+            <span>Hero component</span>
+            <span>Desktop and mobile</span>
+            <span>Static concept</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="lab-directions" id="directions">
+        <section class="direction direction-precision" aria-labelledby="precision-title">
+          <header class="direction-heading">
+            <div>
+              <p class="direction-name">Precision Minimal</p>
+              <h2 id="precision-title">Direct and software-first</h2>
+            </div>
+            <p>Sharp geometry, visible structure and compact product language. Strongest for clarity and trust.</p>
+          </header>
+
+          <div class="sample precision-sample">
+            <nav class="sample-nav" aria-label="Precision concept navigation">
+              <Brand instance="precision" />
+              <div class="sample-nav-links" aria-hidden="true">
+                <span>Features</span><span>How it works</span><span>Creators</span>
+              </div>
+              <a href="#precision-title" class="precision-nav-action">Download <Icon name="arrow-down" size={15} /></a>
+            </nav>
+            <div class="precision-grid">
+              <div class="precision-copy">
+                <p class="precision-meta">Free for Windows / Cricket 26 on Steam</p>
+                <h3>Mod Cricket 26.<br /><span>Skip the file work.</span></h3>
+                <p>Import a compatible pack, close the game and click Install. Extra Cover handles the rest.</p>
+                <div class="precision-actions">
+                  <a href="#precision-title">Download free <Icon name="arrow-down" size={18} /></a>
+                  <span>One-click installation after setup</span>
+                </div>
+              </div>
+              <figure class="precision-visual">
+                <img src={img('extra-cover-live.webp')} alt="Extra Cover pack library with an install panel open" width="1600" height="960" loading="lazy" />
+                <figcaption><span>PACK LIBRARY</span><span>INSTALL AND DISABLE FROM ONE PLACE</span></figcaption>
+              </figure>
+            </div>
+            <div class="precision-rail" aria-label="Core capabilities">
+              <span><Icon name="microphone" size={18} /> Commentary</span>
+              <span><Icon name="building-stadium" size={18} /> Stadiums</span>
+              <span><Icon name="scoreboard" size={18} /> HUD</span>
+              <span><Icon name="texture" size={18} /> Textures</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="direction direction-quiet" aria-labelledby="quiet-title">
+          <header class="direction-heading">
+            <div>
+              <p class="direction-name">Quiet Product</p>
+              <h2 id="quiet-title">Calm and approachable</h2>
+            </div>
+            <p>Soft surfaces, generous spacing and a clear app preview. Closest to the current direction, with more confidence.</p>
+          </header>
+
+          <div class="sample quiet-sample">
+            <nav class="quiet-nav" aria-label="Quiet product concept navigation">
+              <Brand instance="quiet" />
+              <div class="quiet-nav-links" aria-hidden="true"><span>Product</span><span>For creators</span><span>FAQ</span></div>
+              <a href="#quiet-title">Get Extra Cover</a>
+            </nav>
+            <div class="quiet-hero">
+              <div class="quiet-copy">
+                <h3>Make Cricket 26<br />feel like yours.</h3>
+                <p>Change the look and sound of the game with compatible packs, installed from one simple app.</p>
+                <div class="quiet-actions">
+                  <a href="#quiet-title">Download free <Icon name="brand-windows" size={17} /></a>
+                  <span>Free for Windows</span>
+                </div>
+              </div>
+              <div class="quiet-product">
+                <div class="quiet-image-wrap">
+                  <img src={img('extra-cover-live.webp')} alt="Extra Cover app showing a compatible stadium pack ready to install" width="1600" height="960" loading="lazy" />
+                </div>
+                <div class="quiet-proof">
+                  <span>Pick a pack</span><span>Click Install</span><span>Play</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="direction direction-broadcast" aria-labelledby="broadcast-title">
+          <header class="direction-heading">
+            <div>
+              <p class="direction-name">Broadcast Noir</p>
+              <h2 id="broadcast-title">Cinematic and fan-led</h2>
+            </div>
+            <p>Stadium atmosphere and bold type lead the story. Best for emotion, launch trailers and social traffic.</p>
+          </header>
+
+          <div class="sample broadcast-sample">
+            <img class="broadcast-backdrop" src={img('stadium-concept.webp')} alt="Floodlit cricket stadium at dusk" width="1536" height="1024" loading="lazy" />
+            <div class="broadcast-shade" aria-hidden="true"></div>
+            <nav class="broadcast-nav" aria-label="Broadcast concept navigation">
+              <Brand instance="broadcast" />
+              <a href="#broadcast-title">Download for Windows <Icon name="arrow-up-right" size={16} /></a>
+            </nav>
+            <div class="broadcast-copy">
+              <p>Cricket 26 modding, made easy.</p>
+              <h3>Change the<br />match-day feel.</h3>
+              <div class="broadcast-bottom">
+                <p>Commentary, stadiums, scoreboards, textures and music. Install compatible packs without moving files by hand.</p>
+                <a href="#broadcast-title"><Icon name="player-play" size={18} /> See how it works</a>
+              </div>
+            </div>
+            <div class="broadcast-score" aria-label="Product information">
+              <span>EXTRA COVER</span><strong>FREE</strong><span>WINDOWS / STEAM PC</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="direction direction-scorecard" aria-labelledby="scorecard-title">
+          <header class="direction-heading">
+            <div>
+              <p class="direction-name">Scorecard Editorial</p>
+              <h2 id="scorecard-title">Distinctive and cricket-specific</h2>
+            </div>
+            <p>Print-inspired rhythm, factual copy and editorial framing. Best for a confident community-tool identity.</p>
+          </header>
+
+          <div class="sample scorecard-sample">
+            <nav class="scorecard-nav" aria-label="Scorecard concept navigation">
+              <Brand instance="scorecard" />
+              <div class="scorecard-nav-links" aria-hidden="true"><span>THE APP</span><span>PACKS</span><span>PACK STUDIO</span></div>
+              <a href="#scorecard-title">FREE DOWNLOAD</a>
+            </nav>
+            <div class="scorecard-body">
+              <div class="scorecard-title-block">
+                <p>FOR CRICKET 26 / WINDOWS</p>
+                <h3>Your game.<br />Your call.</h3>
+              </div>
+              <figure class="scorecard-image">
+                <img src={img('cricket-minimal.webp')} alt="Red cricket ball resting beside a pale wooden bat" width="1536" height="1024" loading="lazy" />
+              </figure>
+              <div class="scorecard-copy">
+                <p>Extra Cover installs and manages compatible mod packs, so you can change your game without sorting files by hand.</p>
+                <a href="#scorecard-title">Download free <Icon name="arrow-right" size={18} /></a>
+              </div>
+              <div class="scorecard-index" aria-label="Available pack types">
+                <div><span>Commentary</span><strong>VOICE</strong></div>
+                <div><span>Stadiums</span><strong>GROUND</strong></div>
+                <div><span>HUD and textures</span><strong>SCREEN</strong></div>
+                <div><span>Music and crowds</span><strong>SOUND</strong></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section class="lab-summary" aria-labelledby="summary-title">
+        <p class="lab-kicker">Initial recommendation</p>
+        <h2 id="summary-title">Start with Precision Minimal.</h2>
+        <p>It keeps the current page easy to understand while giving Extra Cover a sharper, more ownable product identity. Broadcast Noir is the strongest alternative if the brand should lead with atmosphere.</p>
+        <a href={base}>Compare with the current page <Icon name="arrow-up-right" size={17} /></a>
+      </section>
+    </main>
+  </body>
+</html>

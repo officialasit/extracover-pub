@@ -1,31 +1,276 @@
 ---
-import Base from '../layouts/Base.astro';
-import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import TrustBar from '../components/TrustBar.astro';
-import Features from '../components/Features.astro';
-import HowItWorks from '../components/HowItWorks.astro';
-import PackStudio from '../components/PackStudio.astro';
-import Faq from '../components/Faq.astro';
-import Cta from '../components/Cta.astro';
-import Footer from '../components/Footer.astro';
+import Brand from '../components/Brand.astro';
+import Icon from '../components/Icon.astro';
+import { features } from '../data/features';
+import { indexingEnabled, pageTitle, pageDescription, siteUrls, structuredData } from '../lib/seo';
+import '../styles/minimal.css';
+const base = import.meta.env.BASE_URL;
+const img = (name: string) => `${base}images/${name}`;
+const discordInviteUrl = 'https://discord.gg/zfvrW5uDj9';
+const faqs = [
+  ['Are the apps free?', 'Yes. Extra Cover and Pack Studio are free to use. Cricket 26 is not included.'],
+  ['What platforms are supported?', 'Windows PCs with Cricket 26 installed through Steam. Console versions are not supported.'],
+  ['Where can I find packs?', 'Browse community packs in Extra Cover or import a compatible .c26pack file. Availability and compatibility vary by pack.'],
+  ['Can I undo an installed mod?', 'Yes. Close Cricket 26, then choose Disable mod in your library. Extra Cover removes that mod while keeping your other compatible mods installed.'],
+  ['What happens after a Cricket 26 update?', 'Game updates can affect pack compatibility. Re-scan your installation if prompted, and check for updated packs before installing them again.'],
+  ['Do I need Pack Studio to use mods?', 'No. Extra Cover installs and manages your packs. Pack Studio is optional and is for creators who want to build texture packs.'],
+  ['Is Extra Cover an official Cricket 26 product?', 'No. Extra Cover and Pack Studio are independent community tools, not affiliated with or endorsed by Big Ant Studios or Nacon. Cricket 26 is required and sold separately.'],
+];
+const urls = siteUrls(Astro.site);
+const jsonLd = JSON.stringify(structuredData(urls, faqs)).replace(/</g, '\\u003c');
 ---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={pageDescription} />
+    <meta name="robots" content={indexingEnabled ? 'index, follow, max-image-preview:large' : 'noindex, follow'} />
+    <meta name="theme-color" content="#0e1116" />
+    <link rel="canonical" href={urls.home} />
+    {indexingEnabled && <link rel="sitemap" type="application/xml" href={urls.sitemap} />}
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={urls.home} />
+    <meta property="og:site_name" content="Extra Cover" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={urls.socialImage} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Extra Cover — modding software for Cricket 26" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={urls.socialImage} />
+    <meta name="twitter:image:alt" content="Extra Cover — modding software for Cricket 26" />
+    <script type="application/ld+json" is:inline set:html={jsonLd} />
+    <title>{pageTitle}</title>
+    <link rel="icon" href={`${base}images/brand-icon.png`} type="image/png" />
+    <link rel="icon" href={`${base}favicon.ico`} sizes="any" />
+    <link rel="preload" as="font" href={`${base}fonts/manrope-latin-800-normal.woff2`} type="font/woff2" crossorigin />
+    <script is:inline define:vars={{ assetBase: base }}>
+      try {
+        const saved = localStorage.getItem('ec-landing-theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch {}
+      const bannerTheme = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      const bannerPreload = document.createElement('link');
+      bannerPreload.rel = 'preload';
+      bannerPreload.as = 'image';
+      bannerPreload.fetchPriority = 'high';
+      bannerPreload.href = `${assetBase}images/extra-cover-banner-${bannerTheme}-${devicePixelRatio > 1 ? 1280 : 640}.webp`;
+      document.head.appendChild(bannerPreload);
+    </script>
+    <noscript><style is:inline>
+      .feature-tabs,.mobile-menu,.theme-toggle{display:none!important}
+      .feature-panel[hidden]{display:grid!important}.feature-panel-photo[hidden]{display:block!important}
+      @media(max-width:767px){#main-nav{display:flex;position:static;padding:0;border:0;flex-wrap:wrap;gap:4px 16px;margin:0}#main-nav a{min-height:36px}.site-header{height:auto;position:static}.nav-inner{flex-wrap:wrap;padding-block:12px}.nav-actions{display:none}}
+    </style></noscript>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container nav-inner">
+        <a href={base} class="brand-link" aria-label="Extra Cover home"><Brand /></a>
+        <nav aria-label="Main navigation" id="main-nav">
+          <a href="#features">Features</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#pack-studio">For creators</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="icon-button theme-toggle" aria-label="Switch colour theme"><Icon name="sun-moon" /></button>
+          <a class="button button-small" href="#download">Get Beta Updates <Icon name="arrow-down" size={16}/></a>
+          <button class="icon-button mobile-menu" aria-label="Open navigation" aria-controls="main-nav" aria-expanded="false"><Icon name="menu-2" /></button>
+        </div>
+      </div>
+    </header>
+    <main id="main">
+      <section class="hero container" aria-labelledby="hero-title">
+        <div class="hero-content">
+          <h1 id="hero-title">Mod Cricket 26.<br/><span>In one click.</span></h1>
+          <p class="hero-copy">Extra Cover installs compatible Cricket 26 packs on Windows: commentary, stadiums, HUDs, textures, logos and music.</p>
+          <div class="hero-actions">
+            <a class="button" href="#download"><Icon name="bell" /> Get Beta Updates</a>
+            <a class="text-link hero-link" href="#extra-cover">How it works <Icon name="arrow-up-right" size={18}/></a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <figure
+            class="hero-art hero-banner"
+            aria-label="Extra Cover, modding software for Cricket 26"
+          style={`--hero-banner-light:image-set(url('${img('extra-cover-banner-light-640.webp')}') 1x,url('${img('extra-cover-banner-light-1280.webp')}') 2x);--hero-banner-dark:image-set(url('${img('extra-cover-banner-dark-640.webp')}') 1x,url('${img('extra-cover-banner-dark-1280.webp')}') 2x)`}
+          >
+            <img class="hero-banner-game-logo" src={img('cricket-26-logo-small.webp')} alt="Cricket 26" width="320" height="66" />
+          </figure>
+        </div>
+      </section>
+      <div class="hero-caption container"><span>Windows only</span><span>Requires Cricket 26 on Steam</span><span>One-click installation after setup</span></div>
 
-<Base
-  title="Extra Cover — Mod Cricket 26 in 1 Click"
-  description="One-click modding for Cricket 26. Stadium textures, broadcast HUDs, and a built-in Pack Studio. Free and open source for Windows & Steam."
->
-  <Nav />
+      <section class="features section container" id="features" aria-labelledby="features-title">
+        <div class="section-heading reveal">
+          <h2 id="features-title">What packs can change</h2>
+        </div>
+        <div class="feature-tabs" role="tablist" aria-label="Modding features">
+          {features.map((feature, index) => (
+            <button type="button" role="tab" id={`tab-${feature.id}`} aria-controls={`panel-${feature.id}`} aria-selected={index === 0 ? 'true' : 'false'} tabindex={index === 0 ? 0 : -1} data-feature={feature.id}>
+              <Icon name={feature.icon} size={21} /><span>{feature.label}</span>
+            </button>
+          ))}
+        </div>
+        <div class="feature-panels">
+          {features.map((feature, index) => (
+            <article role="tabpanel" id={`panel-${feature.id}`} aria-labelledby={`tab-${feature.id}`} tabindex="0" class:list={['feature-panel', { 'feature-panel-photo': feature.kind === 'photo' }]} hidden={index !== 0}>
+              {feature.kind !== 'photo' && (
+                <div class="feature-copy">
+                  <h3>{feature.title}</h3>
+                  <p>{feature.description}</p>
+                  <details class="feature-note"><summary>Compatibility notes <Icon name="chevron-down" size={13}/></summary><p>{feature.detail}</p></details>
+                </div>
+              )}
+              {feature.kind === 'sequence' ? (
+                <div class="commentary-sequence" aria-label={feature.sequenceLabel}>
+                  <div class="sequence-lead">
+                    <Icon name="microphone" size={38} />
+                    <div><span>COMMENTARY PACK</span><strong>{feature.sequenceLabel}</strong></div>
+                  </div>
+                  <ol class="sequence-list">
+                    {feature.sequence.map(item => (
+                      <li><Icon name={item.icon} size={22} /><div><strong>{item.label}</strong><span>{item.detail}</span></div></li>
+                    ))}
+                  </ol>
+                </div>
+              ) : feature.kind === 'signal' ? (
+                <div class="feature-signal" aria-label={feature.signalLabel}>
+                  <p>{feature.signalLabel}</p>
+                  <div class="signal-items">
+                    {feature.signals.map(signal => (
+                      <div><Icon name={signal.icon} size={27} /><span>{signal.label}</span></div>
+                    ))}
+                  </div>
+                </div>
+              ) : feature.kind === 'photo' ? (
+                <figure class="feature-story">
+                  <img src={img(feature.image)} alt={feature.alt} width={feature.width} height={feature.height} loading="lazy" />
+                  <div class="feature-story-copy">
+                    <h3>{feature.title}</h3>
+                    <p>{feature.description}</p>
+                    <details class="feature-note"><summary>Compatibility notes <Icon name="chevron-down" size={13}/></summary><p>{feature.detail}</p></details>
+                  </div>
+                  <figcaption class="sr-only">{feature.caption}</figcaption>
+                </figure>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </section>
 
-  <main>
-    <Hero />
-    <TrustBar />
-    <Features />
-    <HowItWorks />
-    <PackStudio />
-    <Faq />
-    <Cta />
-  </main>
+      <section class="product section container" id="extra-cover" aria-labelledby="product-title">
+        <div class="product-intro reveal">
+          <h2 id="product-title">How installation works</h2>
+          <p>One-time setup. Then install packs in a click.</p>
+        </div>
+        <div class="install-flow">
+          <ol class="install-steps reveal" id="how-it-works">
+            <li><div class="install-marker"><span class="install-number">01</span><img class="install-illustration" src={img('install-setup-320.webp')} srcset={`${img('install-setup-320.webp')} 320w, ${img('install-setup.webp')} 480w`} sizes="(max-width:1000px) 140px, 160px" alt="" width="480" height="480" loading="lazy" decoding="async" /></div><div class="install-step-copy"><h3>Set up once</h3><p>Find Cricket 26. Let Extra Cover scan.</p></div></li>
+            <li><div class="install-marker"><span class="install-number">02</span><img class="install-illustration" src={img('install-pack-320.webp')} srcset={`${img('install-pack-320.webp')} 320w, ${img('install-pack.webp')} 480w`} sizes="(max-width:1000px) 140px, 160px" alt="" width="480" height="480" loading="lazy" decoding="async" /></div><div class="install-step-copy"><h3>Choose a pack</h3><p>Browse the community or import a .c26pack.</p></div></li>
+            <li><div class="install-marker"><span class="install-number">03</span><img class="install-illustration" src={img('install-play-320.webp')} srcset={`${img('install-play-320.webp')} 320w, ${img('install-play.webp')} 480w`} sizes="(max-width:1000px) 140px, 160px" alt="" width="480" height="480" loading="lazy" decoding="async" /></div><div class="install-step-copy"><h3>Install and play</h3><p>Close the game. Install. Launch Cricket 26.</p></div></li>
+          </ol>
+        </div>
+      </section>
 
-  <Footer />
-</Base>
+      <section class="studio section" id="pack-studio" aria-labelledby="studio-title">
+        <div class="container">
+          <figure class="studio-campaign reveal">
+            <img src={img('pack-studio-campaign-gpt.webp')} alt="Pack Studio creator workspace with the app on a monitor, a graphite cricket shirt, texture swatches and a red ball" width="1536" height="1024" loading="lazy" />
+            <div class="studio-campaign-copy">
+              <p class="eyebrow">PACK STUDIO</p>
+              <h2 id="studio-title">Got a mod in mind?</h2>
+              <p>Find textures. Edit your PNGs. Build a pack. Our free creator companion takes care of the file formats.</p>
+              <div class="studio-campaign-actions">
+                <button class="text-link" data-dialog="studio-dialog">Explore Pack Studio <Icon name="arrow-up-right" size={19}/></button>
+              </div>
+            </div>
+            <figcaption class="sr-only">Pack Studio combines the real creator interface with a tactile cricket design workspace.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="faq section container" id="faq" aria-labelledby="faq-title">
+        <div class="faq-heading"><h2 id="faq-title">A few quick answers.</h2></div>
+        <div class="faq-list">
+          {faqs.map(([question, answer]) => <details><summary>{question}<Icon name="plus" size={18}/></summary><p>{answer}</p></details>)}
+        </div>
+      </section>
+
+      <section class="download section container" id="download" aria-labelledby="download-title">
+        <div class="download-heading reveal"><h2 id="download-title">Get Extra Cover.</h2><p>Install mods for Cricket 26. Want to create your own? Explore Pack Studio.</p></div>
+        <div class="download-cards reveal">
+          <article class="download-card download-card-primary"><h3>Extra Cover</h3><p>Install commentary, stadiums, HUDs, textures and more after setup.</p><button class="button" data-dialog="download-dialog">Get Beta Updates <Icon name="arrow-right" size={17}/></button><small>Windows / Steam PC · Public download coming soon</small></article>
+          <article class="download-card"><h3>Pack Studio</h3><p>Build your own texture packs and share your match-day ideas.</p><button class="button button-outline" data-dialog="studio-dialog">Explore Pack Studio <Icon name="arrow-up-right" size={17}/></button><small>Optional creator tool · Public download coming soon</small></article>
+        </div>
+        <noscript><p class="no-script-note">Public downloads are coming soon. <a href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Join Discord for release updates and help.</a> Pack Studio is an optional Windows texture-pack creator: export PNGs, edit them in your image editor, then build a .c26pack.</p></noscript>
+      </section>
+    </main>
+    <footer class="site-footer container">
+      <div class="footer-top"><a href={base} class="brand-link" aria-label="Back to Extra Cover home"><Brand large /></a><nav aria-label="Footer navigation"><a href="#faq">FAQ</a><a href="#pack-studio">Pack Studio</a>{discordInviteUrl && <a href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Join Discord</a>}<button data-dialog="about-dialog">About & credits</button></nav></div>
+      <div class="footer-bottom"><p>An independent community tool for Cricket 26.</p><p>Made for the love of the game.</p></div>
+    </footer>
+
+    <dialog id="download-dialog" aria-labelledby="download-dialog-title" class="info-dialog">
+      <button class="dialog-close icon-button" data-close aria-label="Close beta update details"><Icon name="x"/></button>
+      <Icon name="bell" size={32}/><h2 id="download-dialog-title">Get Extra Cover beta updates.</h2>
+      <p>The Open Beta installer is not publicly available yet. Join our Discord community for release announcements and help getting started.</p>
+      <p class="muted">Cricket 26 on Steam PC required. Pack availability varies by release.</p>
+      {discordInviteUrl && <p><a href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Join the public Discord for beta help</a></p>}
+      <a class="button" href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Join the community <Icon name="arrow-up-right" size={18}/></a>
+    </dialog>
+    <dialog id="studio-dialog" aria-labelledby="studio-dialog-title" class="info-dialog studio-walkthrough">
+      <button class="dialog-close icon-button" data-close aria-label="Close Pack Studio details"><Icon name="x"/></button>
+      <p class="eyebrow" id="studio-dialog-title">PACK STUDIO · CREATOR GUIDE</p>
+      <div class="studio-slides">
+        <section data-studio-slide aria-labelledby="studio-slide-1" tabindex="-1">
+          <div class="studio-slide-symbol"><Icon name="palette" size={54}/></div>
+          <h2 id="studio-slide-1">Your artwork.<br/>Their next match.</h2>
+          <p>Turn your texture edits into Cricket 26 packs. Pack Studio handles the file formats; you bring the design.</p>
+          <div class="studio-guide-points"><span><Icon name="photo" size={22}/>Export PNGs</span><span><Icon name="brush" size={22}/>Edit your way</span><span><Icon name="package" size={22}/>Share a pack</span></div>
+          <p class="muted">A free, optional creator companion. Players use Extra Cover to install your packs.</p>
+        </section>
+        <section data-studio-slide aria-labelledby="studio-slide-2" tabindex="-1" hidden>
+          <div class="studio-slide-symbol"><Icon name="package-import" size={54}/></div>
+          <h2 id="studio-slide-2">Collect. Create. Ship.</h2>
+          <ol class="studio-guide-steps">
+            <li><span>01</span><div><h3>Collect your textures</h3><p>Find Cricket 26, browse its textures, and add the ones you want to a pack.</p></div></li>
+            <li><span>02</span><div><h3>Create in your image editor</h3><p>Export PNGs. Edit them in Photoshop, GIMP, or your preferred editor.</p></div></li>
+            <li><span>03</span><div><h3>Build and share</h3><p>Rebuild a .c26pack, then install it with Extra Cover or share it with other players.</p></div></li>
+          </ol>
+        </section>
+        <section data-studio-slide aria-labelledby="studio-slide-3" tabindex="-1" hidden>
+          <div class="studio-slide-symbol"><Icon name="device-desktop" size={54}/></div>
+          <h2 id="studio-slide-3">A few things to know.</h2>
+          <ul class="studio-guide-notes">
+            <li><strong>Windows + Cricket 26 on Steam</strong><span>Runs locally and opens in your browser. Bring your own image editor.</span></li>
+            <li><strong>Keep filenames and image sizes</strong><span>Save edits in the exported folder and preserve any transparency.</span></li>
+            <li><strong>Texture packs are the focus</strong><span>Some textures are view-only. Audio replacements need separate preparation.</span></li>
+          </ul>
+          <p class="muted">The free public download is coming soon.</p>
+        </section>
+      </div>
+      <div class="studio-slide-footer">
+        <button class="text-link" type="button" data-studio-back disabled><Icon name="arrow-left" size={16}/>Back</button>
+        <span class="studio-slide-count" aria-live="polite" aria-atomic="true">1 / 3</span>
+        <button class="button" type="button" data-studio-next><span>Next</span><Icon name="arrow-right" size={16}/></button>
+      </div>
+    </dialog>
+    <dialog id="about-dialog" aria-labelledby="about-dialog-title" class="info-dialog">
+      <button class="dialog-close icon-button" data-close aria-label="Close preview details"><Icon name="x"/></button>
+      <h2 id="about-dialog-title">Made for the cricket community.</h2>
+      <p>Extra Cover is an independent community tool, not affiliated with or endorsed by Cricket 26's developers or publishers. Cricket 26 is required and is not included.</p>
+      <p>Campaign and stadium artwork are AI-generated concepts, not gameplay captures. The Cricket 26 logo identifies the supported game; its trademarks and artwork belong to their respective owners.</p>
+      <p>This website has no analytics or account system. Your theme preference is saved in your browser. External community links open services with their own policies.</p>
+      <p class="muted">Extra Cover is proprietary software, free to use. The separate engine and Pack Studio are licensed under GPL-3.0-or-later. Full release notices and source access will accompany public downloads.</p>
+    </dialog>
+    <script src="../scripts/interactions.ts"></script>
+  </body>
+</html>

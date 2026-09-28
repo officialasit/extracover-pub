@@ -1,8 +1,9 @@
-# Astro build output
+node_modules/
 dist/
 .astro/
-node_modules/
-
-# Generated at build time from src/assets/logo.png — never committed, so it
-# cannot drift from the lockup and palette it is built from.
-public/og-banner.png
+.browser-profile/
+.cache/
+review/
+public/images/*.png
+!public/images/brand-icon.png
+!public/images/cricket-26-logo.png

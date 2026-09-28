@@ -1,0 +1,14 @@
+---
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+interface Props { name: string; size?: number; class?: string; }
+const { name, size = 20, class: className = '' } = Astro.props;
+// Only the package's outline family is used. No runtime icon dependency.
+const safeName = /^[a-z0-9-]+$/.test(name) ? name : 'arrow-right';
+const file = resolve(`node_modules/@tabler/icons/icons/outline/${safeName}.svg`);
+const svg = readFileSync(file, 'utf8')
+  .replace('<svg ', `<svg aria-hidden="true" focusable="false" `)
+  .replace('width="24"', `width="${size}"`).replace('height="24"', `height="${size}"`)
+  .replace('stroke-width="2"', 'stroke-width="1.7"');
+---
+<span class:list={['icon', className]} set:html={svg} />

@@ -1,23 +1,5 @@
-# GitHub Pages deployment for the landing page.
-#
-# ── Where this file goes ─────────────────────────────────────────────────────
-# NOT in this (private) repo. `node tools/sync-web.js <dir>` materialises the
-# public repo tree: the landing page at the root, this file placed at
-# .github/workflows/deploy-pages.yml.
-#
-# It has to live in the public repo because `actions/deploy-pages` publishes to
-# the Pages site of the repo it runs in — it cannot push to a different one.
-# The alternative, a cross-repo push, would need a personal access token stored
-# as a secret, which is a credential and an audit burden for a page that isn't
-# secret in the first place.
-#
-# ── One-time repo setup ──────────────────────────────────────────────────────
-# Settings → Pages → Source: **GitHub Actions** (not "Deploy from a branch").
-#
-# Astro's base path is `/extracover-pub/` (see astro.config.mjs) because this is a
-# project site served from a subpath. If the repo is ever renamed, change it
-# there and in app/release-config.js together.
-
+# Deploy the standalone Astro site to the repository's GitHub Pages project path.
+# Repository Settings > Pages > Source must be set to GitHub Actions.
 name: Deploy landing page
 
 on:
@@ -26,19 +8,19 @@ on:
     paths:
       - 'src/**'
       - 'public/**'
+      - 'scripts/**'
       - 'astro.config.mjs'
+      - 'tsconfig.json'
       - 'package.json'
+      - 'package-lock.json'
       - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
 
-# Read-only by default; Pages needs these two explicitly.
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Let a running deploy finish rather than cancelling it — a half-published
-# site is worse than a slightly stale one.
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -56,17 +38,12 @@ jobs:
 
       - run: npm ci
 
-      # The social preview card is generated rather than committed, so it can
-      # never drift from the banner it is built from.
-      - run: node scripts/make-og.mjs
-
+      # Optimized images, fonts and the social preview are committed with the site.
       - run: npm run build
         env:
-          # Wire the waitlist form to a real endpoint by setting this as a repo
-          # variable (Settings → Secrets and variables → Actions → Variables).
-          # Left empty the form tells visitors signups aren't open rather than
-          # silently discarding their address.
-          PUBLIC_SUBSCRIBE_ENDPOINT: ${{ vars.PUBLIC_SUBSCRIBE_ENDPOINT }}
+          SITE_URL: 'https://officialasit.github.io'
+          SITE_BASE: '/extracover-pub/'
+          SITE_INDEXING: 'true'
 
       - uses: actions/upload-pages-artifact@v3
         with:
