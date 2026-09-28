@@ -14,7 +14,7 @@ functionality unless the requested change calls for a redesign.
   transparency. Some textures are view-only; audio needs separate preparation.
 - Both tools are independent community products. Do not imply affiliation with
   Big Ant Studios or Nacon. Cricket 26 is required and sold separately.
-- Extra Cover is proprietary; the separate engine and Pack Studio are
+- Extra Cover is proprietary; the separate engine is
   GPL-3.0-or-later. Refer to `../LICENSING.md` for the current boundaries.
 - Check actual release availability before changing download destinations or
   claims. The current page uses availability dialogs, not installer links.
