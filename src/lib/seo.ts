@@ -13,6 +13,43 @@ export function siteUrls(site: URL | undefined, base = import.meta.env.BASE_URL)
     sitemap: new URL('sitemap.xml', home).href,
     socialImage: new URL('images/social-preview.jpg', home).href,
     logo: new URL('images/brand-icon.png', home).href,
+    installGuide: new URL(installGuide.path, home).href,
+  };
+}
+
+export const installGuide = {
+  path: 'guides/install-cricket-26-mods/',
+  title: 'How to Install Mods in Cricket 26 on PC — Extra Cover Guide',
+  headline: 'How to install mods in Cricket 26 on PC',
+  description: 'Step-by-step guide to installing Cricket 26 mods on a Windows PC with Extra Cover: setup, supported pack formats, installing and undoing packs, and troubleshooting.',
+  published: '2026-10-08',
+  modified: '2026-10-08',
+};
+
+export function guideStructuredData(urls: ReturnType<typeof siteUrls>) {
+  const page = urls.installGuide;
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'TechArticle', '@id': `${page}#article`,
+        headline: installGuide.headline, description: installGuide.description,
+        url: page, mainEntityOfPage: page, inLanguage: 'en',
+        datePublished: installGuide.published, dateModified: installGuide.modified,
+        image: urls.socialImage,
+        author: { '@type': 'Organization', name: 'Extra Cover', url: urls.home },
+        publisher: { '@type': 'Organization', name: 'Extra Cover', url: urls.home, logo: { '@type': 'ImageObject', url: urls.logo } },
+        isPartOf: { '@id': `${urls.home}#website` },
+        about: { '@id': `${urls.home}#software` },
+      },
+      {
+        '@type': 'BreadcrumbList', '@id': `${page}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Extra Cover', item: urls.home },
+          { '@type': 'ListItem', position: 2, name: 'Install mods in Cricket 26', item: page },
+        ],
+      },
+    ],
   };
 }
 

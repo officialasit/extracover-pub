@@ -214,7 +214,7 @@ const jsonLd = JSON.stringify(structuredData(urls, faqs)).replace(/</g, '\\u003c
       </section>
     </main>
     <footer class="site-footer container">
-      <div class="footer-top"><a href={base} class="brand-link" aria-label="Back to Extra Cover home"><Brand large /></a><nav aria-label="Footer navigation"><a href="#faq">FAQ</a><a href="#pack-studio">Pack Studio</a>{discordInviteUrl && <a href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Join Discord</a>}<button data-dialog="about-dialog">About & credits</button></nav></div>
+      <div class="footer-top"><a href={base} class="brand-link" aria-label="Back to Extra Cover home"><Brand large /></a><nav aria-label="Footer navigation"><a href={`${base}guides/install-cricket-26-mods/`}>Install guide</a><a href="#faq">FAQ</a><a href="#pack-studio">Pack Studio</a>{discordInviteUrl && <a href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Join Discord</a>}<button data-dialog="about-dialog">About & credits</button></nav></div>
       <div class="footer-bottom"><p>An independent community tool for Cricket 26.</p><p>Made for the love of the game.</p></div>
     </footer>
 

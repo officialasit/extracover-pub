@@ -9,7 +9,8 @@ This does not change the tools' coming-soon download status or publish the site.
 - A local 1200×630 JPEG social preview derived from existing brand artwork.
 - JSON-LD identifying the website, page, Extra Cover, Pack Studio, and FAQs.
   Questions and answers come from the exact array used to render the FAQ.
-- A single-page XML sitemap. The style lab is excluded and keeps its noindex.
+- An XML sitemap with the landing page and install guide. The style lab is
+  excluded and keeps its noindex. The guide has TechArticle + breadcrumb JSON-LD.
 - Generated robots.txt with crawling allowed so bots can read page-level
   noindex. Production includes the absolute sitemap URL.
 - Static product descriptions, one primary heading, native expandable FAQs,

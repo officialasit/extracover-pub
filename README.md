@@ -12,7 +12,7 @@ Open http://127.0.0.1:4321. `npm run build` produces the static site in `dist/`.
 
 ## Current direction
 
-The current revision uses the app's X icon, Extra Cover wordmark, self-hosted Manrope, neutral surfaces and cricket-red controls in light and dark themes. The hero includes the official theme-specific banner with a small Cricket 26 logo overlay. Six feature tabs, three illustrated installation cards, a Pack Studio campaign section and three-slide creator guide, seven FAQs, aligned download cards, and a quiet footer complete the page. Separate app screenshot blocks have been removed.
+The current revision uses the app's X icon, Extra Cover wordmark, self-hosted Manrope, neutral surfaces and cricket-red controls in light and dark themes. The hero includes the official theme-specific banner with a small Cricket 26 logo overlay. Six feature tabs, three illustrated installation cards, a Pack Studio campaign section and three-slide creator guide, seven FAQs, aligned download cards, and a quiet footer complete the page. A separate install guide lives at `/guides/install-cricket-26-mods/`, linked from the footer. Separate app screenshot blocks have been removed.
 
 See [AGENTS.md](AGENTS.md) for the design direction, product context, accessibility requirements, and verification workflow.
 

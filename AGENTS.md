@@ -30,6 +30,9 @@ functionality unless the requested change calls for a redesign.
 - `src/pages/robots.txt.ts` and `sitemap.xml.ts`: generated crawler endpoints.
 - `src/components/Brand.astro`: Extra Cover identity.
 - `src/components/Icon.astro`: local Tabler outline icons.
+- `src/pages/guides/install-cricket-26-mods.astro` + `src/styles/guide.css`:
+  the install guide. Steps and error messages mirror the real app; screenshots
+  in `public/images/guide/` are real captures and render only when present.
 - `public/images/` and `public/fonts/`: shipped assets and self-hosted Manrope.
 - `src/pages/style-lab.astro`: separate design reference; do not use its styles
   to change the main page. `global.css` is also not the main page stylesheet.
@@ -76,7 +79,7 @@ Chrome. Build first. It writes screenshots and results to ignored
 - Before public downloads exist, use “Get Beta Updates” for the header, hero,
   and Extra Cover card. The flow leads to Discord release news, not guaranteed
   early access or a working installer.
-- Footer: one closing brand mark, FAQ, Pack Studio, Join Discord, and
+- Footer: one closing brand mark, Install guide, FAQ, Pack Studio, Join Discord, and
   About & credits. Keep it quiet and avoid another download CTA.
 - Keep the subtle divider between installation and Pack Studio.
 
