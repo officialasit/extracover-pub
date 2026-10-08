@@ -1,5 +1,7 @@
 export const pageTitle = 'Extra Cover — Cricket 26 Mod Manager for Windows';
-export const pageDescription = 'Install compatible Cricket 26 mod packs on Windows with Extra Cover. Browse community packs or create texture packs with the optional Pack Studio companion.';
+export const pageDescription = 'Download Extra Cover, the free Cricket 26 mod manager for Windows, now in open beta. Install community packs in one click or create your own with Pack Studio.';
+
+import { releases } from '../data/releases';
 
 // Production pages can be indexed. Set SITE_INDEXING=false for staging builds.
 export const indexingEnabled = import.meta.env.PROD && import.meta.env.SITE_INDEXING !== 'false';
@@ -21,7 +23,7 @@ export const installGuide = {
   path: 'guides/install-cricket-26-mods/',
   title: 'How to Install Mods in Cricket 26 on PC — Extra Cover Guide',
   headline: 'How to install mods in Cricket 26 on PC',
-  description: 'Step-by-step guide to installing Cricket 26 mods on a Windows PC with Extra Cover: setup, supported pack formats, installing and undoing packs, and troubleshooting.',
+  description: 'Step-by-step guide to installing Cricket 26 mods on a Windows PC with Extra Cover: download, setup, supported pack formats, installing and undoing packs, and troubleshooting.',
   published: '2026-10-08',
   modified: '2026-10-08',
 };
@@ -79,16 +81,20 @@ export function structuredData(urls: ReturnType<typeof siteUrls>, faqs: string[]
         name: 'Extra Cover', url: `${urls.home}#extra-cover`, image: urls.logo,
         applicationCategory: 'UtilitiesApplication', operatingSystem: 'Windows',
         isAccessibleForFree: true,
-        description: 'Extra Cover is an independent, free-to-use Windows mod manager for Cricket 26 on Steam. It installs compatible .c26pack files after initial setup. Public downloads are coming soon.',
-        softwareRequirements: 'Cricket 26 installed through Steam on a Windows PC.',
+        description: 'Extra Cover is an independent, free-to-use Windows mod manager for Cricket 26 on Steam. It installs compatible .c26pack files after initial setup. Free open beta.',
+        softwareVersion: releases.extraCover.version,
+        downloadUrl: releases.extraCover.url, releaseNotes: releases.extraCover.notes,
+        softwareRequirements: 'Windows 10 or 11 and Cricket 26 installed through Steam.',
       },
       {
         '@type': 'SoftwareApplication', '@id': studio,
         name: 'Pack Studio', url: `${urls.home}#pack-studio`,
         applicationCategory: 'DesignApplication', operatingSystem: 'Windows',
         isAccessibleForFree: true,
-        description: 'Pack Studio is the free, optional Cricket 26 texture-pack creator. Export supported textures as PNGs, edit them in your own image editor, then build a .c26pack for Extra Cover. Public downloads are coming soon.',
-        softwareRequirements: 'Cricket 26 installed through Steam on Windows and an image editor. Keep exported filenames, dimensions, and transparency.',
+        description: 'Pack Studio is the free, optional Cricket 26 texture-pack creator. Export supported textures as PNGs, edit them in your own image editor, then build a .c26pack for Extra Cover. Free open beta.',
+        softwareVersion: releases.packStudio.version,
+        downloadUrl: releases.packStudio.url, releaseNotes: releases.packStudio.notes,
+        softwareRequirements: 'Windows 10 or 11, Cricket 26 installed through Steam, and an image editor. Keep exported filenames, dimensions, and transparency.',
       },
     ],
   };

@@ -97,6 +97,14 @@ document.querySelectorAll<HTMLButtonElement>('[data-dialog]').forEach(button => 
   dialog?.showModal();
   if (dialog) enter(dialog, 8, 0.25);
 }));
+// Download links keep their default action, so the file downloads in the
+// background (and still works without JavaScript) while next steps open on top.
+document.querySelectorAll<HTMLAnchorElement>('a[data-download-dialog]').forEach(link => link.addEventListener('click', () => {
+  const dialog = document.getElementById(link.dataset.downloadDialog!) as HTMLDialogElement | null;
+  if (!dialog || dialog.open) return;
+  link.closest('dialog')?.close();
+  setTimeout(() => { dialog.showModal(); enter(dialog, 8, 0.25); });
+}));
 document.querySelectorAll<HTMLButtonElement>('[data-close]').forEach(button => button.addEventListener('click', () => button.closest('dialog')?.close()));
 document.querySelectorAll('dialog').forEach(dialog => dialog.addEventListener('click', event => {
   if (event.target !== dialog) return;

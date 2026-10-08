@@ -42,7 +42,11 @@ try {
   const webpage = graph.find(node => Array.isArray(node['@type']) && node['@type'].includes('FAQPage'));
   const questions = await page.locator('.faq-list details').evaluateAll(details => details.map(d => ({ name: d.querySelector('summary').textContent.trim(), answer: d.querySelector('p').textContent.trim() })));
   assert.deepEqual(webpage.mainEntity.map(q => ({ name: q.name, answer: q.acceptedAnswer.text })), questions);
-  assert.ok(graph.filter(node => node['@type'] === 'SoftwareApplication').every(node => !node.downloadUrl && !node.aggregateRating && !node.offers), 'Do not invent downloads, reviews or sale offers');
+  const apps = graph.filter(node => node['@type'] === 'SoftwareApplication');
+  assert.ok(apps.every(node => !node.aggregateRating && !node.offers), 'Do not invent reviews or sale offers');
+  assert.ok(apps.every(node => node.downloadUrl?.startsWith('https://github.com/officialasit/extracover-releases/releases/download/')), 'Download URLs must point at published release assets');
+  const pageDownloads = await page.locator('a[data-download-dialog]').evaluateAll(links => links.map(a => a.href));
+  assert.ok(apps.every(node => pageDownloads.includes(node.downloadUrl)), 'Schema download URLs must match the page');
   assert.ok(graph.every(node => node['@id'].startsWith(canonical)));
   const brokenAnchors = await page.locator('a[href^="#"]').evaluateAll(links => links.filter(a => !document.getElementById(a.hash.slice(1))).map(a => a.hash));
   assert.deepEqual(brokenAnchors, []);

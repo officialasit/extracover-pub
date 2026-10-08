@@ -1,14 +1,17 @@
 ---
 import Brand from '../components/Brand.astro';
 import Icon from '../components/Icon.astro';
+import DownloadDialogs from '../components/DownloadDialogs.astro';
 import { features } from '../data/features';
+import { releases } from '../data/releases';
 import { indexingEnabled, pageTitle, pageDescription, siteUrls, structuredData } from '../lib/seo';
 import '../styles/minimal.css';
 const base = import.meta.env.BASE_URL;
 const img = (name: string) => `${base}images/${name}`;
 const discordInviteUrl = 'https://discord.gg/zfvrW5uDj9';
 const faqs = [
-  ['Are the apps free?', 'Yes. Extra Cover and Pack Studio are free to use. Cricket 26 is not included.'],
+  ['Are the apps free?', 'Yes. Extra Cover and Pack Studio are free to use and are in open beta. Cricket 26 is not included.'],
+  ['Why does Windows warn me when I run the installer?', 'The open beta downloads are not code-signed yet, so Windows SmartScreen warns the first time. Choose More info, then Run anyway. Only download Extra Cover from this site or its GitHub releases page.'],
   ['What platforms are supported?', 'Windows PCs with Cricket 26 installed through Steam. Console versions are not supported.'],
   ['Where can I find packs?', 'Browse community packs in Extra Cover or import a compatible .c26pack file. Availability and compatibility vary by pack.'],
   ['Can I undo an installed mod?', 'Yes. Close Cricket 26, then choose Disable mod in your library. Extra Cover removes that mod while keeping your other compatible mods installed.'],
@@ -81,7 +84,7 @@ const jsonLd = JSON.stringify(structuredData(urls, faqs)).replace(/</g, '\\u003c
         </nav>
         <div class="nav-actions">
           <button class="icon-button theme-toggle" aria-label="Switch colour theme"><Icon name="sun-moon" /></button>
-          <a class="button button-small" href="#download">Get Beta Updates <Icon name="arrow-down" size={16}/></a>
+          <a class="button button-small" href="#download">Download <Icon name="arrow-down" size={16}/></a>
           <button class="icon-button mobile-menu" aria-label="Open navigation" aria-controls="main-nav" aria-expanded="false"><Icon name="menu-2" /></button>
         </div>
       </div>
@@ -92,7 +95,7 @@ const jsonLd = JSON.stringify(structuredData(urls, faqs)).replace(/</g, '\\u003c
           <h1 id="hero-title">Mod Cricket 26.<br/><span>In one click.</span></h1>
           <p class="hero-copy">Extra Cover installs compatible Cricket 26 packs on Windows: commentary, stadiums, HUDs, textures, logos and music.</p>
           <div class="hero-actions">
-            <a class="button" href="#download"><Icon name="bell" /> Get Beta Updates</a>
+            <a class="button" href={releases.extraCover.url} data-download-dialog="download-dialog"><Icon name="download" /> Download for Windows</a>
             <a class="text-link hero-link" href="#extra-cover">How it works <Icon name="arrow-up-right" size={18}/></a>
           </div>
         </div>
@@ -106,7 +109,7 @@ const jsonLd = JSON.stringify(structuredData(urls, faqs)).replace(/</g, '\\u003c
           </figure>
         </div>
       </section>
-      <div class="hero-caption container"><span>Windows only</span><span>Requires Cricket 26 on Steam</span><span>One-click installation after setup</span></div>
+      <div class="hero-caption container"><span>Free open beta · v{releases.extraCover.version}</span><span>Windows 10/11 · Cricket 26 on Steam</span><span>One-click installation after setup</span></div>
 
       <section class="features section container" id="features" aria-labelledby="features-title">
         <div class="section-heading reveal">
@@ -207,10 +210,10 @@ const jsonLd = JSON.stringify(structuredData(urls, faqs)).replace(/</g, '\\u003c
       <section class="download section container" id="download" aria-labelledby="download-title">
         <div class="download-heading reveal"><h2 id="download-title">Get Extra Cover.</h2><p>Install mods for Cricket 26. Want to create your own? Explore Pack Studio.</p></div>
         <div class="download-cards reveal">
-          <article class="download-card download-card-primary"><h3>Extra Cover</h3><p>Install commentary, stadiums, HUDs, textures and more after setup.</p><button class="button" data-dialog="download-dialog">Get Beta Updates <Icon name="arrow-right" size={17}/></button><small>Windows / Steam PC · Public download coming soon</small></article>
-          <article class="download-card"><h3>Pack Studio</h3><p>Build your own texture packs and share your match-day ideas.</p><button class="button button-outline" data-dialog="studio-dialog">Explore Pack Studio <Icon name="arrow-up-right" size={17}/></button><small>Optional creator tool · Public download coming soon</small></article>
+          <article class="download-card download-card-primary"><h3>Extra Cover</h3><p>Install commentary, stadiums, HUDs, textures and more after setup.</p><a class="button" href={releases.extraCover.url} data-download-dialog="download-dialog"><Icon name="download" size={17}/> Download Extra Cover</a><small>v{releases.extraCover.version} open beta · {releases.extraCover.kind} · {releases.extraCover.size} · <a href={releases.extraCover.notes} target="_blank" rel="noopener noreferrer">Release notes</a></small></article>
+          <article class="download-card"><h3>Pack Studio</h3><p>Build your own texture packs and share your match-day ideas.</p><a class="button button-outline" href={releases.packStudio.url} data-download-dialog="studio-download-dialog"><Icon name="download" size={17}/> Download Pack Studio</a><small>v{releases.packStudio.version} beta · {releases.packStudio.kind} · {releases.packStudio.size} · <a href={releases.packStudio.notes} target="_blank" rel="noopener noreferrer">Release notes</a></small></article>
         </div>
-        <noscript><p class="no-script-note">Public downloads are coming soon. <a href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Join Discord for release updates and help.</a> Pack Studio is an optional Windows texture-pack creator: export PNGs, edit them in your image editor, then build a .c26pack.</p></noscript>
+        <noscript><p class="no-script-note">The downloads are unsigned, so Windows SmartScreen warns the first time: choose More info, then Run anyway. Extract the whole Pack Studio ZIP before running packstudio.exe. <a href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Join Discord for help and release news.</a></p></noscript>
       </section>
     </main>
     <footer class="site-footer container">
@@ -218,14 +221,7 @@ const jsonLd = JSON.stringify(structuredData(urls, faqs)).replace(/</g, '\\u003c
       <div class="footer-bottom"><p>An independent community tool for Cricket 26.</p><p>Made for the love of the game.</p></div>
     </footer>
 
-    <dialog id="download-dialog" aria-labelledby="download-dialog-title" class="info-dialog">
-      <button class="dialog-close icon-button" data-close aria-label="Close beta update details"><Icon name="x"/></button>
-      <Icon name="bell" size={32}/><h2 id="download-dialog-title">Get Extra Cover beta updates.</h2>
-      <p>The Open Beta installer is not publicly available yet. Join our Discord community for release announcements and help getting started.</p>
-      <p class="muted">Cricket 26 on Steam PC required. Pack availability varies by release.</p>
-      {discordInviteUrl && <p><a href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Join the public Discord for beta help</a></p>}
-      <a class="button" href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Join the community <Icon name="arrow-up-right" size={18}/></a>
-    </dialog>
+    <DownloadDialogs discordInviteUrl={discordInviteUrl} />
     <dialog id="studio-dialog" aria-labelledby="studio-dialog-title" class="info-dialog studio-walkthrough">
       <button class="dialog-close icon-button" data-close aria-label="Close Pack Studio details"><Icon name="x"/></button>
       <p class="eyebrow" id="studio-dialog-title">PACK STUDIO · CREATOR GUIDE</p>
@@ -254,7 +250,7 @@ const jsonLd = JSON.stringify(structuredData(urls, faqs)).replace(/</g, '\\u003c
             <li><strong>Keep filenames and image sizes</strong><span>Save edits in the exported folder and preserve any transparency.</span></li>
             <li><strong>Texture packs are the focus</strong><span>Some textures are view-only. Audio replacements need separate preparation.</span></li>
           </ul>
-          <p class="muted">The free public download is coming soon.</p>
+          <p class="muted"><a href={releases.packStudio.url} data-download-dialog="studio-download-dialog">Download Pack Studio v{releases.packStudio.version}</a> · free open beta · {releases.packStudio.size}</p>
         </section>
       </div>
       <div class="studio-slide-footer">
@@ -269,7 +265,7 @@ const jsonLd = JSON.stringify(structuredData(urls, faqs)).replace(/</g, '\\u003c
       <p>Extra Cover is an independent community tool, not affiliated with or endorsed by Cricket 26's developers or publishers. Cricket 26 is required and is not included.</p>
       <p>Campaign and stadium artwork are AI-generated concepts, not gameplay captures. The Cricket 26 logo identifies the supported game; its trademarks and artwork belong to their respective owners.</p>
       <p>This website has no analytics or account system. Your theme preference is saved in your browser. External community links open services with their own policies.</p>
-      <p class="muted">Extra Cover is proprietary software, free to use. The separate engine is licensed under GPL-3.0-or-later. Full release notices and source access will accompany public downloads.</p>
+      <p class="muted">Extra Cover is proprietary software, free to use. The separate engine is licensed under GPL-3.0-or-later. Engine source and release notices are attached to each <a href={releases.all} target="_blank" rel="noopener noreferrer">GitHub release</a>.</p>
     </dialog>
     <script src="../scripts/interactions.ts"></script>
   </body>

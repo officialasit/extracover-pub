@@ -1,0 +1,32 @@
+---
+import Icon from './Icon.astro';
+import { releases } from '../data/releases';
+interface Props { discordInviteUrl: string; }
+const { discordInviteUrl } = Astro.props;
+const base = import.meta.env.BASE_URL;
+// Opened by any a[data-download-dialog] link after its download starts.
+---
+<dialog id="download-dialog" aria-labelledby="download-dialog-title" class="info-dialog">
+  <button class="dialog-close icon-button" data-close aria-label="Close download details"><Icon name="x"/></button>
+  <Icon name="circle-check" size={32}/><h2 id="download-dialog-title">Your download has started.</h2>
+  <ol class="dialog-steps">
+    <li>Run <strong>{releases.extraCover.file}</strong>.</li>
+    <li>The installer is unsigned, so Windows SmartScreen warns the first time. Choose <strong>More info</strong>, then <strong>Run anyway</strong>.</li>
+    <li>Extra Cover finds Cricket 26 through Steam. Then add a pack and install it.</li>
+  </ol>
+  <p class="muted">Download didn’t start? <a href={releases.extraCover.url}>Try again</a> or read the <a href={releases.extraCover.notes} target="_blank" rel="noopener noreferrer">release notes</a>. New to modding? Follow the <a href={`${base}guides/install-cricket-26-mods/`}>install guide</a>.</p>
+  <p>Join the Extra Cover community on Discord for help, new packs and release news.</p>
+  <a class="button" href={discordInviteUrl} target="_blank" rel="noopener noreferrer"><Icon name="brand-discord" size={18}/> Join the Discord</a>
+</dialog>
+<dialog id="studio-download-dialog" aria-labelledby="studio-download-dialog-title" class="info-dialog">
+  <button class="dialog-close icon-button" data-close aria-label="Close Pack Studio download details"><Icon name="x"/></button>
+  <Icon name="circle-check" size={32}/><h2 id="studio-download-dialog-title">Pack Studio is downloading.</h2>
+  <ol class="dialog-steps">
+    <li><strong>Extract the whole ZIP.</strong> Don’t run Pack Studio from inside the archive.</li>
+    <li>Run <strong>packstudio.exe</strong>. It is unsigned, so choose <strong>More info</strong>, then <strong>Run anyway</strong>.</li>
+    <li>It opens in your browser and reads your game. The first read takes a minute or two.</li>
+  </ol>
+  <p class="muted">Download didn’t start? <a href={releases.packStudio.url}>Try again</a> or read the <a href={releases.packStudio.notes} target="_blank" rel="noopener noreferrer">release notes</a>.</p>
+  <p>Share your packs, get feedback and ask questions in the Discord community.</p>
+  <a class="button" href={discordInviteUrl} target="_blank" rel="noopener noreferrer"><Icon name="brand-discord" size={18}/> Join the Discord</a>
+</dialog>

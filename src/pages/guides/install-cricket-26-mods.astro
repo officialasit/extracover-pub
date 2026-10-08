@@ -3,6 +3,8 @@ import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import Brand from '../../components/Brand.astro';
 import Icon from '../../components/Icon.astro';
+import DownloadDialogs from '../../components/DownloadDialogs.astro';
+import { releases } from '../../data/releases';
 import { guideStructuredData, indexingEnabled, installGuide, siteUrls } from '../../lib/seo';
 import '../../styles/minimal.css';
 import '../../styles/guide.css';
@@ -39,6 +41,7 @@ const unsupported = [
 ];
 
 const troubleshooting = [
+  ['“Windows protected your PC” when running the installer', 'The open beta downloads are not code-signed yet, so SmartScreen warns the first time. Choose More info, then Run anyway. Only download Extra Cover from this site or its GitHub releases page.'],
   ['“Cricket 26 is running — close the game before installing mods”', 'Quit to desktop, wait a few seconds, and check Task Manager for a leftover Cricket26.exe. Extra Cover refuses to change files while the game is open.'],
   ['“Automatic detection came up empty” or “This folder is not a moddable Cricket 26 install.”', 'Choose the folder manually. It is the folder containing Cricket26.exe and a data subfolder — in Steam, right-click Cricket 26 → Manage → Browse local files. Only the Steam PC build is supported.'],
   ['“Cricket 26 was updated since setup — re-run setup from Settings before applying mods”', 'Open Settings → Troubleshooting → Re-index game, then install the pack again. If the pack was made before the update, check whether its creator has released a new version.'],
@@ -106,7 +109,7 @@ const troubleshooting = [
         </nav>
         <div class="nav-actions">
           <button class="icon-button theme-toggle" aria-label="Switch colour theme"><Icon name="sun-moon" /></button>
-          <a class="button button-small" href={`${base}#download`}>Get Beta Updates <Icon name="arrow-down" size={16}/></a>
+          <a class="button button-small" href={`${base}#download`}>Download <Icon name="arrow-down" size={16}/></a>
           <button class="icon-button mobile-menu" aria-label="Open navigation" aria-controls="main-nav" aria-expanded="false"><Icon name="menu-2" /></button>
         </div>
       </div>
@@ -120,15 +123,18 @@ const troubleshooting = [
       <header class="guide-header">
         <p class="eyebrow">GUIDE · WINDOWS · STEAM</p>
         <h1>{installGuide.headline}</h1>
-        <p class="guide-lede">Install Cricket 26 mods on a Windows PC with Extra Cover, a free community mod manager. Set it up once, add a pack, then install it with one click. You can undo any mod.</p>
+        <p class="guide-lede">Install Cricket 26 mods on a Windows PC with Extra Cover, a free community mod manager. Download it, set it up once, add a pack, then install it with one click. You can undo any mod.</p>
         <p class="guide-meta">Published <time datetime={installGuide.published}>8 October 2026</time> · About 6 minutes</p>
       </header>
 
-      <aside class="guide-callout" aria-label="Release status">
-        <Icon name="bell" size={22} />
+      <aside class="guide-callout" aria-label="Download">
+        <Icon name="download" size={22} />
         <div>
-          <p><strong>Extra Cover is in pre-release.</strong> The public installer is not available yet. This guide describes the current beta. Join the Discord for release news and setup help.</p>
-          <a class="button button-small" href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Get Beta Updates <Icon name="arrow-up-right" size={16}/></a>
+          <p><strong>Extra Cover {releases.extraCover.version} is out now in open beta.</strong> Free for Windows 10/11 with Cricket 26 on Steam. {releases.extraCover.kind}, {releases.extraCover.size}.</p>
+          <div class="guide-callout-actions">
+            <a class="button button-small" href={releases.extraCover.url} data-download-dialog="download-dialog">Download Extra Cover <Icon name="download" size={16}/></a>
+            <a class="text-link" href={releases.extraCover.notes} target="_blank" rel="noopener noreferrer">Release notes <Icon name="arrow-up-right" size={16}/></a>
+          </div>
         </div>
       </aside>
 
@@ -137,9 +143,10 @@ const troubleshooting = [
         <ol>
           <li><a href="#requirements">What you need</a></li>
           <li><a href="#formats">Supported mod formats</a></li>
-          <li><a href="#setup">Step 1: Set up Extra Cover</a></li>
-          <li><a href="#get-pack">Step 2: Add a pack</a></li>
-          <li><a href="#install">Step 3: Install and play</a></li>
+          <li><a href="#download">Step 1: Download and install</a></li>
+          <li><a href="#setup">Step 2: Set up Extra Cover</a></li>
+          <li><a href="#get-pack">Step 3: Add a pack</a></li>
+          <li><a href="#install">Step 4: Install and play</a></li>
           <li><a href="#undo">Undo or remove a mod</a></li>
           <li><a href="#updates">After a Cricket 26 update</a></li>
           <li><a href="#troubleshooting">Troubleshooting</a></li>
@@ -150,7 +157,7 @@ const troubleshooting = [
         <section id="requirements" aria-labelledby="requirements-title">
           <h2 id="requirements-title">What you need</h2>
           <ul class="guide-checklist">
-            <li><Icon name="check" size={18}/><span><strong>A Windows PC.</strong> Extra Cover is a Windows app.</span></li>
+            <li><Icon name="check" size={18}/><span><strong>A Windows 10 or 11 PC.</strong> Extra Cover is a Windows app.</span></li>
             <li><Icon name="check" size={18}/><span><strong>Cricket 26 installed through Steam.</strong> Game Pass, cracked and console copies are not supported.</span></li>
             <li><Icon name="check" size={18}/><span><strong>Some free disk space.</strong> Extra Cover backs up every original file a pack replaces.</span></li>
             <li><Icon name="check" size={18}/><span><strong>Cricket 26 closed</strong> whenever you install or disable a mod.</span></li>
@@ -172,8 +179,18 @@ const troubleshooting = [
           <p>Packs can change supported stadium textures, commentary, menus, logos, kits, music and crowd audio. Each pack changes only the files its creator listed. It does not add new stadiums or change gameplay.</p>
         </section>
 
+        <section id="download" aria-labelledby="download-title">
+          <h2 id="download-title"><span class="guide-step">1</span>Download and install Extra Cover</h2>
+          <ol class="guide-steps">
+            <li><strong>Download <a href={releases.extraCover.url} data-download-dialog="download-dialog">{releases.extraCover.file}</a></strong> ({releases.extraCover.size}) from this site or the <a href={releases.extraCover.notes} target="_blank" rel="noopener noreferrer">GitHub release</a>.</li>
+            <li><strong>Run the installer.</strong> It is not code-signed yet, so Windows SmartScreen warns the first time. Choose <em>More info</em>, then <em>Run anyway</em>.</li>
+            <li><strong>Open Extra Cover.</strong> It checks for app updates itself, so you only download the installer once.</li>
+          </ol>
+          <p>Want to check the file? The release’s <code>latest.yml</code> lists the installer’s SHA-512. In PowerShell, run <code>{`Get-FileHash .\\${releases.extraCover.file} -Algorithm SHA512`}</code>.</p>
+        </section>
+
         <section id="setup" aria-labelledby="setup-title">
-          <h2 id="setup-title"><span class="guide-step">1</span>Set up Extra Cover</h2>
+          <h2 id="setup-title"><span class="guide-step">2</span>Set up Extra Cover</h2>
           <p>Setup runs once, the first time you open Extra Cover.</p>
           <ol class="guide-steps">
             <li><strong>Locate your game.</strong> Extra Cover searches your Steam libraries for Cricket 26. It checks that the folder contains <code>data-0.blobset.pc</code> and that it can write there.</li>
@@ -191,7 +208,7 @@ const troubleshooting = [
         </section>
 
         <section id="get-pack" aria-labelledby="get-pack-title">
-          <h2 id="get-pack-title"><span class="guide-step">2</span>Add a pack</h2>
+          <h2 id="get-pack-title"><span class="guide-step">3</span>Add a pack</h2>
           <p>There are two ways to add a pack to your library. Adding a pack never changes the game — that happens only when you choose Install.</p>
           <h3>Browse community packs</h3>
           <p>Open the <em>Browse community</em> tab. It lists packs that creators have published on GameBanana in the <em>Extra Cover Mods</em> category. Choose a pack to see its description, then select <em>Download</em> to add it to your library. <em>View on GameBanana</em> opens its public page. Listings depend on what creators have published.</p>
@@ -208,7 +225,7 @@ const troubleshooting = [
         </section>
 
         <section id="install" aria-labelledby="install-title">
-          <h2 id="install-title"><span class="guide-step">3</span>Install and play</h2>
+          <h2 id="install-title"><span class="guide-step">4</span>Install and play</h2>
           <ol class="guide-steps">
             <li><strong>Close Cricket 26.</strong> Extra Cover will not change files while the game is running.</li>
             <li><strong>Choose the pack</strong> in your library. Its details show the creator, size, version and where it came from. Select <em>Install</em>.</li>
@@ -252,8 +269,11 @@ const troubleshooting = [
 
         <section class="guide-next" aria-labelledby="next-title">
           <h2 id="next-title">Want to make your own pack?</h2>
-          <p>Pack Studio is Extra Cover’s free, optional creator companion. Export supported textures as PNGs, edit them in your own image editor, and build a <code>.c26pack</code>. A full Pack Studio guide is coming soon.</p>
-          <a class="text-link" href={`${base}#pack-studio`}>Explore Pack Studio <Icon name="arrow-up-right" size={18}/></a>
+          <p>Pack Studio is Extra Cover’s free, optional creator companion. Export supported textures as PNGs, edit them in your own image editor, and build a <code>.c26pack</code>. Pack Studio {releases.packStudio.version} is in open beta. Extract the whole ZIP before running <code>packstudio.exe</code>. A full Pack Studio guide is coming soon.</p>
+          <div class="guide-callout-actions">
+            <a class="button button-outline button-small" href={releases.packStudio.url} data-download-dialog="studio-download-dialog">Download Pack Studio <Icon name="download" size={16}/></a>
+            <a class="text-link" href={`${base}#pack-studio`}>Explore Pack Studio <Icon name="arrow-up-right" size={18}/></a>
+          </div>
         </section>
       </article>
     </main>
@@ -262,6 +282,7 @@ const troubleshooting = [
       <div class="footer-top"><a href={base} class="brand-link" aria-label="Back to Extra Cover home"><Brand large /></a><nav aria-label="Footer navigation"><a href={`${base}#faq`}>FAQ</a><a href={`${base}#pack-studio`}>Pack Studio</a><a href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Join Discord</a></nav></div>
       <div class="footer-bottom"><p>An independent community tool for Cricket 26.</p><p>Made for the love of the game.</p></div>
     </footer>
+    <DownloadDialogs discordInviteUrl={discordInviteUrl} />
     <script src="../../scripts/interactions.ts"></script>
   </body>
 </html>

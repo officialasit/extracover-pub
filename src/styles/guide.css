@@ -40,3 +40,5 @@
   .guide-table thead{display:none}.guide-table tbody tr,.guide-table tbody th,.guide-table tbody td{display:block;width:auto}.guide-table tbody th{padding:14px 14px 0}.guide-table tbody td{padding:6px 14px 14px}.guide-table tbody tr:first-child{border-top:0}
   .guide-next{padding:22px!important}
 }
+.guide-callout-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;margin-top:12px}.guide-callout-actions .button{margin-top:0;min-height:44px;font-size:12px}.guide-callout-actions .text-link{font-size:13px;min-height:44px;color:var(--accent)}
+.guide-body li a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}

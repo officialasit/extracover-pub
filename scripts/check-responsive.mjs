@@ -74,7 +74,7 @@ try {
     const page = await browser.newPage({ viewport: { width, height: 844 }, javaScriptEnabled: false });
     await page.goto('http://127.0.0.1:4337/', { waitUntil: 'networkidle' });
     assert.equal(await page.locator('[role="tabpanel"]:visible').count(), 6, 'Feature text must remain readable without JavaScript');
-    assert.equal(await page.locator('.faq-list details').count(), 7);
+    assert.equal(await page.locator('.faq-list details').count(), 8);
     assert.equal(await page.locator('.no-script-note').isVisible(), true);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'No-JavaScript page overflow');
     await page.close();

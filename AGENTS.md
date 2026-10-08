@@ -16,8 +16,11 @@ functionality unless the requested change calls for a redesign.
   Big Ant Studios or Nacon. Cricket 26 is required and sold separately.
 - Extra Cover is proprietary; the separate engine is
   GPL-3.0-or-later. Refer to `../LICENSING.md` for the current boundaries.
-- Check actual release availability before changing download destinations or
-  claims. The current page uses availability dialogs, not installer links.
+- Both tools are in public open beta (from 8 October 2026). Download links come
+  from `src/data/releases.ts` and point at explicit assets in
+  github.com/officialasit/extracover-releases. When a release ships, update that
+  file and check each URL works without a GitHub login. Do not use
+  `/releases/latest` for Pack Studio; it is a prerelease.
 
 ## Source map and commands
 
@@ -72,13 +75,16 @@ Chrome. Build first. It writes screenshots and results to ignored
 - Pack Studio: keep the creator campaign banner and the three-slide guide
   explaining the concept, Collect/Create/Ship, and requirements. No separate
   app screenshot blocks beneath installation or Pack Studio.
-- FAQ: keep answers focused. Order from cost and platforms through finding
-  packs, undoing mods, updates, the creator tool, and independent status.
+- FAQ: keep answers focused. Order from cost, the unsigned-installer warning
+  and platforms through finding packs, undoing mods, updates, the creator
+  tool, and independent status.
 - CTA: “Get Extra Cover.” Two aligned product cards without duplicate logos.
   Align titles, descriptions, buttons, and availability notes across cards.
-- Before public downloads exist, use “Get Beta Updates” for the header, hero,
-  and Extra Cover card. The flow leads to Discord release news, not guaranteed
-  early access or a working installer.
+- Download links are plain `<a>` elements with `data-download-dialog`: the
+  file downloads in the background and `DownloadDialogs.astro` opens next steps
+  (SmartScreen “More info → Run anyway”, extract the Pack Studio ZIP) with the
+  Discord invite. Keep links working without JavaScript. The header “Download”
+  scrolls to the CTA cards; the hero and cards download directly.
 - Footer: one closing brand mark, Install guide, FAQ, Pack Studio, Join Discord, and
   About & credits. Keep it quiet and avoid another download CTA.
 - Keep the subtle divider between installation and Pack Studio.

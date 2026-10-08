@@ -42,7 +42,7 @@ Uncompressed PNG working files are intentionally ignored to keep the repository 
 
 ## Review behaviour
 
-Public downloads are still marked as coming soon. No game files are modified by this website. No analytics or account flow is installed. Public landing-page indexing was authorized on 28 September 2026: production builds are indexable, while local development and builds with `SITE_INDEXING=false` are unindexed. The style lab always remains unindexed.
+Extra Cover and Pack Studio are in public open beta; download links live in `src/data/releases.ts`. No game files are modified by this website. No analytics or account flow is installed. Public landing-page indexing was authorized on 28 September 2026: production builds are indexable, while local development and builds with `SITE_INDEXING=false` are unindexed. The style lab always remains unindexed.
 
 The concrete launch checklist and remaining release blockers are in `../docs/OPEN_BETA_READINESS.md`.
 

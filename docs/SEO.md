@@ -1,7 +1,7 @@
 # Technical SEO and answer-engine support
 
 The public page is indexable in production, as authorized on 28 September 2026.
-This does not change the tools' coming-soon download status or publish the site.
+Both tools have been in public open beta since 8 October 2026.
 
 ## What is implemented
 
@@ -22,9 +22,9 @@ This does not change the tools' coming-soon download status or publish the site.
   theme-aware preload, and responsive installation-image sources reduce loading
   cost. Removed screenshot-gallery JavaScript/CSS is no longer bundled.
 
-The software nodes intentionally omit reviews, offers, download URLs, and
-versions until those facts are verifiable. Free-to-use and Windows requirements
-are represented, without promising public availability. FAQ markup describes
+The software nodes include the published version, download URL and release
+notes from `src/data/releases.ts`; the SEO check requires those URLs to match
+the page's download links. They omit reviews, ratings and offers. FAQ markup describes
 the content; it is not a promise of Google FAQ rich results.
 
 ## Build for the real destination
