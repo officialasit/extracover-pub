@@ -11,10 +11,10 @@ type Release = { name: string; version: string; file: string; url: string; notes
 const fallback: { extraCover: Release; packStudio: Release } = {
   extraCover: {
     name: 'Extra Cover',
-    version: '0.2.1',
-    file: 'extra-cover-Setup-0.2.1.exe',
-    url: `${repoUrl}/releases/download/v0.2.1/extra-cover-Setup-0.2.1.exe`,
-    notes: `${repoUrl}/releases/tag/v0.2.1`,
+    version: '0.2.2',
+    file: 'extra-cover-Setup-0.2.2.exe',
+    url: `${repoUrl}/releases/download/v0.2.2/extra-cover-Setup-0.2.2.exe`,
+    notes: `${repoUrl}/releases/tag/v0.2.2`,
     size: '143 MB',
     kind: 'Windows installer',
   },
