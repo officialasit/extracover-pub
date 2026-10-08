@@ -15,6 +15,12 @@ on:
       - 'package-lock.json'
       - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
+  # Picks up new app releases: the build reads the newest download links.
+  schedule:
+    - cron: '17 */3 * * *'
+  # Optional instant trigger from the releases repo (see docs/SEO.md).
+  repository_dispatch:
+    types: [release-published]
 
 permissions:
   contents: read
@@ -44,6 +50,7 @@ jobs:
           SITE_URL: 'https://officialasit.github.io'
           SITE_BASE: '/extracover-pub/'
           SITE_INDEXING: 'true'
+          GITHUB_TOKEN: ${{ github.token }}
 
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -16,11 +16,12 @@ functionality unless the requested change calls for a redesign.
   Big Ant Studios or Nacon. Cricket 26 is required and sold separately.
 - Extra Cover is proprietary; the separate engine is
   GPL-3.0-or-later. Refer to `../LICENSING.md` for the current boundaries.
-- Both tools are in public open beta (from 8 October 2026). Download links come
-  from `src/data/releases.ts` and point at explicit assets in
-  github.com/officialasit/extracover-releases. When a release ships, update that
-  file and check each URL works without a GitHub login. Do not use
-  `/releases/latest` for Pack Studio; it is a prerelease.
+- Both tools are in public open beta (from 8 October 2026). `src/data/releases.ts`
+  reads the newest release containing each app's file from
+  github.com/officialasit/extracover-releases at build time (the deploy workflow
+  rebuilds every 3 hours), with fallback links if GitHub is unreachable. Keep
+  the fallback pointing at a real release. Do not use `/releases/latest`; Pack
+  Studio ships as a prerelease. `RELEASES_OFFLINE=true` skips the lookup.
 
 ## Source map and commands
 

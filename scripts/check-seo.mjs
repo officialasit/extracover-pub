@@ -68,6 +68,9 @@ try {
   assert.equal(await page.locator('h1').count(), 1);
   const guideGraph = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent())['@graph'];
   assert.ok(guideGraph.every(node => node['@id'].startsWith(guideUrl)));
+  const guideFaq = guideGraph.find(node => node['@type'] === 'FAQPage');
+  const guideQuestions = await page.locator('.guide-faq details').evaluateAll(details => details.map(d => ({ name: d.querySelector('summary').textContent.trim(), answer: d.querySelector('p').textContent.trim() })));
+  assert.deepEqual(guideFaq.mainEntity.map(q => ({ name: q.name, answer: q.acceptedAnswer.text })), guideQuestions);
   const guideAnchors = await page.locator('a[href^="#"]').evaluateAll(links => links.filter(a => !document.getElementById(a.hash.slice(1))).map(a => a.hash));
   assert.deepEqual(guideAnchors, []);
   await page.setContent(lab);

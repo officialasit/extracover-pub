@@ -23,7 +23,11 @@ Both tools have been in public open beta since 8 October 2026.
   cost. Removed screenshot-gallery JavaScript/CSS is no longer bundled.
 
 The software nodes include the published version, download URL and release
-notes from `src/data/releases.ts`; the SEO check requires those URLs to match
+notes from `src/data/releases.ts`, which looks up the newest releases at build
+time. The deploy workflow rebuilds every 3 hours; for an instant update, the
+releases repo can send a `release-published` repository_dispatch event. The
+install guide carries TechArticle, FAQPage (from its troubleshooting list) and
+breadcrumb data, and the sitemap includes hand-maintained `lastmod` dates; the SEO check requires those URLs to match
 the page's download links. They omit reviews, ratings and offers. FAQ markup describes
 the content; it is not a promise of Google FAQ rich results.
 

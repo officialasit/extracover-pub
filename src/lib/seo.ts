@@ -28,7 +28,11 @@ export const installGuide = {
   modified: '2026-10-08',
 };
 
-export function guideStructuredData(urls: ReturnType<typeof siteUrls>) {
+// Sitemap lastmod values. Update when a page's content meaningfully changes;
+// never stamp the build time.
+export const homeModified = '2026-10-08';
+
+export function guideStructuredData(urls: ReturnType<typeof siteUrls>, faqs: string[][]) {
   const page = urls.installGuide;
   return {
     '@context': 'https://schema.org',
@@ -43,6 +47,14 @@ export function guideStructuredData(urls: ReturnType<typeof siteUrls>) {
         publisher: { '@type': 'Organization', name: 'Extra Cover', url: urls.home, logo: { '@type': 'ImageObject', url: urls.logo } },
         isPartOf: { '@id': `${urls.home}#website` },
         about: { '@id': `${urls.home}#software` },
+      },
+      {
+        '@type': 'FAQPage', '@id': `${page}#faq`, url: page, inLanguage: 'en',
+        isPartOf: { '@id': `${page}#article` },
+        mainEntity: faqs.map(([question, answer]) => ({
+          '@type': 'Question', name: question,
+          acceptedAnswer: { '@type': 'Answer', text: answer },
+        })),
       },
       {
         '@type': 'BreadcrumbList', '@id': `${page}#breadcrumb`,

@@ -10,15 +10,16 @@ const base = import.meta.env.BASE_URL;
 const img = (name: string) => `${base}images/${name}`;
 const discordInviteUrl = 'https://discord.gg/zfvrW5uDj9';
 const urls = siteUrls(Astro.site);
-const jsonLd = JSON.stringify(guideStructuredData(urls)).replace(/</g, '\\u003c');
 
+// Visible answers and FAQ structured data share this list.
 const troubleshooting = [
-  ['“Windows protected your PC”', 'The beta isn’t code-signed yet. Choose More info, then Run anyway. Only download Extra Cover from this site or its GitHub releases.'],
-  ['“Cricket 26 is running — close the game…”', 'Quit the game fully (check Task Manager for Cricket26.exe), then try again.'],
-  ['“Cricket 26 was updated since setup…”', 'Open Settings → Troubleshooting → Re-index game, then install the pack again. Check whether the creator has an updated version.'],
-  ['“This does not look like an Extra Cover pack.”', 'Only .c26pack files work. Loose files and mods for other tools can’t be imported.'],
-  ['Want to start fresh?', 'Settings → Troubleshooting → Disable all mods. Steam’s Verify integrity of game files also restores every original file.'],
+  ['Why does Windows say “Windows protected your PC”?', 'The open beta isn’t code-signed yet, so SmartScreen warns the first time. Choose More info, then Run anyway. Only download Extra Cover from this site or its GitHub releases.'],
+  ['Why does Extra Cover say “Cricket 26 is running”?', 'Mods can only be installed or removed while the game is closed. Quit Cricket 26 fully (check Task Manager for Cricket26.exe), then try again.'],
+  ['What should I do after a Cricket 26 update?', 'If Extra Cover says “Cricket 26 was updated since setup”, open Settings → Troubleshooting → Re-index game, then install the pack again. Check whether the creator has an updated version.'],
+  ['Why won’t my mod file import?', 'Extra Cover installs .c26pack files. If it says “This does not look like an Extra Cover pack”, the file is loose files or a mod made for another tool, which can’t be imported.'],
+  ['How do I remove all Cricket 26 mods?', 'Open Settings → Troubleshooting → Disable all mods. Steam’s Verify integrity of game files also restores every original file.'],
 ];
+const jsonLd = JSON.stringify(guideStructuredData(urls, troubleshooting)).replace(/</g, '\\u003c');
 ---
 <!doctype html>
 <html lang="en">
@@ -90,7 +91,7 @@ const troubleshooting = [
       <header class="guide-header">
         <p class="eyebrow">GUIDE · WINDOWS · STEAM</p>
         <h1>{installGuide.headline}</h1>
-        <p class="guide-lede">Extra Cover is a free mod manager for Cricket 26 on Steam (Windows 10/11). Install it, pick a pack, click Install. You can undo any mod.</p>
+        <p class="guide-lede"><strong>To install Cricket 26 mods on PC, download Extra Cover, add a pack from Browse community or a .c26pack file, close the game and choose Install.</strong> Extra Cover is a free Cricket 26 modding tool for the Steam version on Windows 10/11, and you can undo any mod.</p>
         <p class="guide-meta">Published <time datetime={installGuide.published}>8 October 2026</time> · 2 minute read</p>
       </header>
 
@@ -123,7 +124,7 @@ const troubleshooting = [
         </section>
 
         <section id="troubleshooting" aria-labelledby="troubleshooting-title">
-          <h2 id="troubleshooting-title">Troubleshooting</h2>
+          <h2 id="troubleshooting-title">Troubleshooting Cricket 26 mods</h2>
           <div class="guide-faq">
             {troubleshooting.map(([problem, fix]) => <details><summary>{problem}<Icon name="plus" size={18}/></summary><p>{fix}</p></details>)}
           </div>
