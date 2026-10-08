@@ -34,8 +34,9 @@ functionality unless the requested change calls for a redesign.
 - `src/components/Brand.astro`: Extra Cover identity.
 - `src/components/Icon.astro`: local Tabler outline icons.
 - `src/pages/guides/install-cricket-26-mods.astro` + `src/styles/guide.css`:
-  the install guide. Steps and error messages mirror the real app; screenshots
-  in `public/images/guide/` are real captures and render only when present.
+  a short install guide (download, get a pack, install, undo, troubleshooting).
+  The app handles onboarding, so keep setup steps out. Screenshots in
+  `public/images/guide/` are real captures.
 - `public/images/` and `public/fonts/`: shipped assets and self-hosted Manrope.
 - `src/pages/style-lab.astro`: separate design reference; do not use its styles
   to change the main page. `global.css` is also not the main page stylesheet.

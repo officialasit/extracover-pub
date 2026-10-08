@@ -23,7 +23,7 @@ export const installGuide = {
   path: 'guides/install-cricket-26-mods/',
   title: 'How to Install Mods in Cricket 26 on PC — Extra Cover Guide',
   headline: 'How to install mods in Cricket 26 on PC',
-  description: 'Step-by-step guide to installing Cricket 26 mods on a Windows PC with Extra Cover: download, setup, supported pack formats, installing and undoing packs, and troubleshooting.',
+  description: 'How to install Cricket 26 mods on a Windows PC with Extra Cover: download the free app, get a pack, install it in one click, undo it, and fix common problems.',
   published: '2026-10-08',
   modified: '2026-10-08',
 };
