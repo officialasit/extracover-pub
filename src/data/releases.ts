@@ -11,19 +11,19 @@ type Release = { name: string; version: string; file: string; url: string; notes
 const fallback: { extraCover: Release; packStudio: Release } = {
   extraCover: {
     name: 'Extra Cover',
-    version: '0.2.2',
-    file: 'extra-cover-Setup-0.2.2.exe',
-    url: `${repoUrl}/releases/download/v0.2.2/extra-cover-Setup-0.2.2.exe`,
-    notes: `${repoUrl}/releases/tag/v0.2.2`,
+    version: '0.2.5',
+    file: 'extra-cover-Setup-0.2.5.exe',
+    url: `${repoUrl}/releases/download/v0.2.5/extra-cover-Setup-0.2.5.exe`,
+    notes: `${repoUrl}/releases/tag/v0.2.5`,
     size: '143 MB',
     kind: 'Windows installer',
   },
   packStudio: {
     name: 'Pack Studio',
-    version: '0.1.1-beta.2',
+    version: '0.1.3',
     file: 'packstudio-win-x64.zip',
-    url: `${repoUrl}/releases/download/packstudio-beta/packstudio-win-x64.zip`,
-    notes: `${repoUrl}/releases/tag/packstudio-beta`,
+    url: `${repoUrl}/releases/download/packstudio/packstudio-win-x64.zip`,
+    notes: `${repoUrl}/releases/tag/packstudio`,
     size: '102 MB',
     kind: 'Windows ZIP',
   },
@@ -32,7 +32,7 @@ const fallback: { extraCover: Release; packStudio: Release } = {
 type GitHubRelease = { draft: boolean; prerelease: boolean; tag_name: string; name: string | null; html_url: string; assets: { name: string; size: number; browser_download_url: string }[] };
 
 // Pick by asset name, not by GitHub's "latest" flag: both apps share one repo,
-// and Pack Studio ships as a prerelease that /releases/latest never selects.
+// and Pack Studio can ship prereleases that /releases/latest never selects.
 function pick(list: GitHubRelease[], asset: RegExp, version: (r: GitHubRelease, file: string) => string | undefined, base: Release, allowPrerelease: boolean): Release {
   for (const release of list) {
     if (release.draft || (release.prerelease && !allowPrerelease)) continue;
