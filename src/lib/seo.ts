@@ -1,5 +1,5 @@
 export const pageTitle = 'Extra Cover — Cricket 26 Mod Manager for Windows';
-export const pageDescription = 'Download Extra Cover, the free Cricket 26 mod manager for Windows, now in open beta. Install community packs in one click or create your own with Pack Studio.';
+export const pageDescription = 'Download Extra Cover, the free Cricket 26 mod manager for Windows on Steam and the Xbox App. Install community packs in one click. Free open beta.';
 
 import { releases } from '../data/releases';
 
@@ -23,14 +23,14 @@ export const installGuide = {
   path: 'guides/install-cricket-26-mods/',
   title: 'How to Install Mods in Cricket 26 on PC — Extra Cover Guide',
   headline: 'How to install mods in Cricket 26 on PC',
-  description: 'How to install Cricket 26 mods on a Windows PC with Extra Cover: download the free app, get a pack, install it in one click, undo it, and fix common problems.',
+  description: 'How to install Cricket 26 mods on Windows through Steam or the Xbox App with Extra Cover: download the free app, get a pack, install it in one click, undo it, and fix common problems.',
   published: '2026-10-08',
-  modified: '2026-10-08',
+  modified: '2026-10-24',
 };
 
 // Sitemap lastmod values. Update when a page's content meaningfully changes;
 // never stamp the build time.
-export const homeModified = '2026-10-08';
+export const homeModified = '2026-10-24';
 
 export function guideStructuredData(urls: ReturnType<typeof siteUrls>, faqs: string[][]) {
   const page = urls.installGuide;
@@ -93,10 +93,10 @@ export function structuredData(urls: ReturnType<typeof siteUrls>, faqs: string[]
         name: 'Extra Cover', url: `${urls.home}#extra-cover`, image: urls.logo,
         applicationCategory: 'UtilitiesApplication', operatingSystem: 'Windows',
         isAccessibleForFree: true,
-        description: 'Extra Cover is an independent, free-to-use Windows mod manager for Cricket 26 on Steam. It installs compatible .c26pack files after initial setup. Free open beta.',
+        description: 'Extra Cover is an independent, free-to-use Windows mod manager for Cricket 26 on Steam or the Xbox App. It installs compatible .c26pack files after initial setup. Free open beta.',
         softwareVersion: releases.extraCover.version,
         downloadUrl: releases.extraCover.url, releaseNotes: releases.extraCover.notes,
-        softwareRequirements: 'Windows 10 or 11 and Cricket 26 installed through Steam.',
+        softwareRequirements: 'Windows 10 or 11 and Cricket 26 installed through Steam or the Xbox App.',
       },
       {
         '@type': 'SoftwareApplication', '@id': studio,
@@ -106,7 +106,7 @@ export function structuredData(urls: ReturnType<typeof siteUrls>, faqs: string[]
         description: 'Pack Studio is the free, optional Cricket 26 texture-pack creator. Export supported textures as PNGs, edit them in your own image editor, then build a .c26pack for Extra Cover. Free open beta.',
         softwareVersion: releases.packStudio.version,
         downloadUrl: releases.packStudio.url, releaseNotes: releases.packStudio.notes,
-        softwareRequirements: 'Windows 10 or 11, Cricket 26 installed through Steam, and an image editor. Keep exported filenames, dimensions, and transparency.',
+        softwareRequirements: 'Windows 10 or 11, Cricket 26 installed through Steam or the Xbox App, and an image editor. Keep exported filenames, dimensions, and transparency.',
       },
     ],
   };

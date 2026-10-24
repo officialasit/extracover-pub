@@ -12,7 +12,7 @@ const discordInviteUrl = 'https://discord.gg/zfvrW5uDj9';
 const faqs = [
   ['Are the apps free?', 'Yes. Extra Cover and Pack Studio are free to use and are in open beta. Cricket 26 is not included.'],
   ['Why does Windows warn me when I run the installer?', 'The open beta downloads are not code-signed yet, so Windows SmartScreen warns the first time. Choose More info, then Run anyway. Only download Extra Cover from this site or its GitHub releases page.'],
-  ['What platforms are supported?', 'Windows PCs with Cricket 26 installed through Steam. Console versions are not supported.'],
+  ['What platforms are supported?', 'Windows PCs with Cricket 26 installed through Steam or the Xbox App. Console versions are not supported.'],
   ['Where can I find packs?', 'Browse community packs in Extra Cover or import a compatible .c26pack file. Availability and compatibility vary by pack.'],
   ['Can I undo an installed mod?', 'Yes. Close Cricket 26, then choose Disable mod in your library. Extra Cover removes that mod while keeping your other compatible mods installed.'],
   ['What happens after a Cricket 26 update?', 'Game updates can affect pack compatibility. Re-scan your installation if prompted, and check for updated packs before installing them again.'],
@@ -109,7 +109,7 @@ const jsonLd = JSON.stringify(structuredData(urls, faqs)).replace(/</g, '\\u003c
           </figure>
         </div>
       </section>
-      <div class="hero-caption container"><span>Free open beta · v{releases.extraCover.version}</span><span>Windows 10/11 · Cricket 26 on Steam</span><span>One-click installation after setup</span></div>
+      <div class="hero-caption container"><span>Free open beta · v{releases.extraCover.version}</span><span>Windows 10/11 · Cricket 26 on Steam &amp; Xbox App</span><span>One-click installation after setup</span></div>
 
       <section class="features section container" id="features" aria-labelledby="features-title">
         <div class="section-heading reveal">
@@ -246,7 +246,7 @@ const jsonLd = JSON.stringify(structuredData(urls, faqs)).replace(/</g, '\\u003c
           <div class="studio-slide-symbol"><Icon name="device-desktop" size={54}/></div>
           <h2 id="studio-slide-3">A few things to know.</h2>
           <ul class="studio-guide-notes">
-            <li><strong>Windows + Cricket 26 on Steam</strong><span>Runs locally and opens in your browser. Bring your own image editor.</span></li>
+            <li><strong>Windows + Cricket 26 on Steam &amp; Xbox App</strong><span>Runs locally and opens in your browser. Bring your own image editor.</span></li>
             <li><strong>Keep filenames and image sizes</strong><span>Save edits in the exported folder and preserve any transparency.</span></li>
             <li><strong>Texture packs are the focus</strong><span>Some textures are view-only. Audio replacements need separate preparation.</span></li>
           </ul>

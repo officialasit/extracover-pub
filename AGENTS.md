@@ -5,7 +5,7 @@ functionality unless the requested change calls for a redesign.
 
 ## Product context
 
-- **Extra Cover** is a free-to-use Windows mod manager for Cricket 26 on Steam.
+- **Extra Cover** is a free-to-use Windows mod manager for Cricket 26 on Steam or the Xbox App.
   It detects the game, performs an initial scan, and installs compatible
   `.c26pack` files. Setup and downloading packs are separate from installation.
 - **Pack Studio** is the optional creator companion. It runs locally, opens in

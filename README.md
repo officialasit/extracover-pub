@@ -1,6 +1,6 @@
 # Extra Cover website
 
-A standalone Astro landing page deployed to GitHub Pages from this repository.
+A standalone Astro landing page deployed to GitHub Pages from this repository. Extra Cover supports Cricket 26 on Windows 10/11 through Steam or the Xbox App. Console versions are not supported.
 Run these commands from the repository root:
 
 ```powershell
