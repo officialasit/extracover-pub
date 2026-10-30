@@ -1,0 +1,17 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  count: number | null;
+  product: string;
+  href: string;
+  class?: string;
+  showArrow?: boolean;
+}
+const { count, product, href, class: className, showArrow = true } = Astro.props;
+---
+{count !== null && (
+  <a class:list={['download-count', className]} href={href} target="_blank" rel="noopener noreferrer" title={`${product} file downloads across published GitHub releases, including updates and repeat downloads.`}>
+    <Icon name="download" size={16} />
+    <span><strong>{count.toLocaleString('en-US')}</strong> downloads on GitHub</span>{showArrow && <Icon name="arrow-up-right" size={14} />}
+  </a>
+)}

@@ -82,6 +82,11 @@ Chrome. Build first. It writes screenshots and results to ignored
   tool, and independent status.
 - CTA: “Get Extra Cover.” Two aligned product cards without duplicate logos.
   Align titles, descriptions, buttons, and availability notes across cards.
+- Downloads: show Extra Cover's GitHub installer total beneath the hero actions
+  and each product's own total in its download card. Count only app installers
+  and application ZIPs across all retained public releases, including prereleases.
+  Refresh at build time on the existing three-hour schedule; omit counts on API
+  failure or offline builds. Downloads include updates and repeat downloads.
 - Download links are plain `<a>` elements with `data-download-dialog`: the
   file downloads in the background and `DownloadDialogs.astro` opens next steps
   (SmartScreen “More info → Run anyway”, extract the Pack Studio ZIP) with the

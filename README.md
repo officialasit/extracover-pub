@@ -44,6 +44,8 @@ Uncompressed PNG working files are intentionally ignored to keep the repository 
 
 Extra Cover and Pack Studio are in public open beta; download links live in `src/data/releases.ts`. No game files are modified by this website. No analytics or account flow is installed. Public landing-page indexing was authorized on 28 September 2026: production builds are indexable, while local development and builds with `SITE_INDEXING=false` are unindexed. The style lab always remains unindexed.
 
+The hero shows Extra Cover's GitHub installer downloads; each download card shows its own product's total. Builds paginate all retained public releases, including prereleases, and count only Extra Cover installer EXEs and Pack Studio application ZIPs. Source archives, checksums, update manifests and blockmaps are excluded. Counts include updates and repeat downloads, not unique users; deleting or replacing release assets can reduce them. The existing three-hour deployment schedule refreshes both links and counts without browser-side API calls. If the API lookup fails or `RELEASES_OFFLINE=true` is set, counts are omitted and fallback download links remain available; incomplete pagination never produces a partial total.
+
 The concrete launch checklist and remaining release blockers are in `../docs/OPEN_BETA_READINESS.md`.
 
 For the configured GitHub Pages destination, build with:

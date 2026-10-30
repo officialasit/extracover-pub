@@ -15,7 +15,7 @@ on:
       - 'package-lock.json'
       - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
-  # Picks up new app releases: the build reads the newest download links.
+  # Refreshes app download links and GitHub download totals at build time.
   schedule:
     - cron: '17 */3 * * *'
   # Optional instant trigger from the releases repo (see docs/SEO.md).

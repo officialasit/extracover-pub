@@ -2,6 +2,7 @@
 import Brand from '../components/Brand.astro';
 import Icon from '../components/Icon.astro';
 import DownloadDialogs from '../components/DownloadDialogs.astro';
+import DownloadCount from '../components/DownloadCount.astro';
 import { features } from '../data/features';
 import { releases } from '../data/releases';
 import { indexingEnabled, pageTitle, pageDescription, siteUrls, structuredData } from '../lib/seo';
@@ -98,6 +99,7 @@ const jsonLd = JSON.stringify(structuredData(urls, faqs)).replace(/</g, '\\u003c
             <a class="button" href={releases.extraCover.url} data-download-dialog="download-dialog"><Icon name="download" /> Download for Windows</a>
             <a class="text-link hero-link" href="#extra-cover">How it works <Icon name="arrow-up-right" size={18}/></a>
           </div>
+          <DownloadCount count={releases.extraCover.downloads} product="Extra Cover" href={releases.all} class="hero-download-count" showArrow={false} />
         </div>
         <div class="hero-visual">
           <figure
@@ -210,15 +212,15 @@ const jsonLd = JSON.stringify(structuredData(urls, faqs)).replace(/</g, '\\u003c
       <section class="download section container" id="download" aria-labelledby="download-title">
         <div class="download-heading reveal"><h2 id="download-title">Get Extra Cover.</h2><p>Install mods for Cricket 26. Want to create your own? Explore Pack Studio.</p></div>
         <div class="download-cards reveal">
-          <article class="download-card download-card-primary"><h3>Extra Cover</h3><p>Install commentary, stadiums, HUDs, textures and more after setup.</p><a class="button" href={releases.extraCover.url} data-download-dialog="download-dialog"><Icon name="download" size={17}/> Download Extra Cover</a><small>v{releases.extraCover.version} open beta · {releases.extraCover.kind} · {releases.extraCover.size} · <a href={releases.extraCover.notes} target="_blank" rel="noopener noreferrer">Release notes</a></small></article>
-          <article class="download-card"><h3>Pack Studio</h3><p>Build your own texture packs and share your match-day ideas.</p><a class="button button-outline" href={releases.packStudio.url} data-download-dialog="studio-download-dialog"><Icon name="download" size={17}/> Download Pack Studio</a><small>v{releases.packStudio.version} beta · {releases.packStudio.kind} · {releases.packStudio.size} · <a href={releases.packStudio.notes} target="_blank" rel="noopener noreferrer">Release notes</a></small></article>
+          <article class="download-card download-card-primary"><h3>Extra Cover</h3><p>Install commentary, stadiums, HUDs, textures and more after setup.</p><a class="button" href={releases.extraCover.url} data-download-dialog="download-dialog"><Icon name="download" size={17}/> Download Extra Cover</a><small>v{releases.extraCover.version} open beta · {releases.extraCover.kind} · {releases.extraCover.size} · <a href={releases.extraCover.notes} target="_blank" rel="noopener noreferrer">Release notes</a></small><DownloadCount count={releases.extraCover.downloads} product="Extra Cover" href={releases.all} /></article>
+          <article class="download-card"><h3>Pack Studio</h3><p>Build your own texture packs and share your match-day ideas.</p><a class="button button-outline" href={releases.packStudio.url} data-download-dialog="studio-download-dialog"><Icon name="download" size={17}/> Download Pack Studio</a><small>v{releases.packStudio.version} beta · {releases.packStudio.kind} · {releases.packStudio.size} · <a href={releases.packStudio.notes} target="_blank" rel="noopener noreferrer">Release notes</a></small><DownloadCount count={releases.packStudio.downloads} product="Pack Studio" href={releases.all} /></article>
         </div>
         <noscript><p class="no-script-note">The downloads are unsigned, so Windows SmartScreen warns the first time: choose More info, then Run anyway. Extract the whole Pack Studio ZIP before running packstudio.exe. <a href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Join Discord for help and release news.</a></p></noscript>
       </section>
     </main>
     <footer class="site-footer container">
       <div class="footer-top"><a href={base} class="brand-link" aria-label="Back to Extra Cover home"><Brand large /></a><nav aria-label="Footer navigation"><a href={`${base}guides/install-cricket-26-mods/`}>Install guide</a><a href="#faq">FAQ</a><a href="#pack-studio">Pack Studio</a>{discordInviteUrl && <a href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Join Discord</a>}<button data-dialog="about-dialog">About & credits</button></nav></div>
-      <div class="footer-bottom"><p>An independent community tool for Cricket 26.</p><p>Made for the love of the game.</p></div>
+      <div class="footer-bottom"><p>An independent community tool for Cricket 26.</p><p>Made by <a href="https://github.com/officialasit" target="_blank" rel="noopener noreferrer">Asit Joshi</a>.</p></div>
     </footer>
 
     <DownloadDialogs discordInviteUrl={discordInviteUrl} />

@@ -6,7 +6,9 @@
 const repo = 'officialasit/extracover-releases';
 const repoUrl = `https://github.com/${repo}`;
 
-type Release = { name: string; version: string; file: string; url: string; notes: string; size: string; kind: string };
+type Release = { name: string; version: string; file: string; url: string; notes: string; size: string; kind: string; downloads: number | null };
+const extraCoverAsset = /^extra-cover-Setup-[\d.]+(?:-[\w.]+)?\.exe$/;
+const packStudioAsset = /^packstudio-win-x64\.zip$/;
 
 const fallback: { extraCover: Release; packStudio: Release } = {
   extraCover: {
@@ -17,6 +19,7 @@ const fallback: { extraCover: Release; packStudio: Release } = {
     notes: `${repoUrl}/releases/tag/v0.2.5`,
     size: '143 MB',
     kind: 'Windows installer',
+    downloads: null,
   },
   packStudio: {
     name: 'Pack Studio',
@@ -26,10 +29,20 @@ const fallback: { extraCover: Release; packStudio: Release } = {
     notes: `${repoUrl}/releases/tag/packstudio`,
     size: '102 MB',
     kind: 'Windows ZIP',
+    downloads: null,
   },
 };
 
-type GitHubRelease = { draft: boolean; prerelease: boolean; tag_name: string; name: string | null; html_url: string; assets: { name: string; size: number; browser_download_url: string }[] };
+type GitHubRelease = { draft: boolean; prerelease: boolean; tag_name: string; name: string | null; html_url: string; assets: { name: string; size: number; browser_download_url: string; download_count: number }[] };
+
+function totalDownloads(list: GitHubRelease[], asset: RegExp): number {
+  return list.filter(release => !release.draft).reduce((total, release) => {
+    return total + release.assets.filter(file => asset.test(file.name)).reduce((sum, file) => {
+      if (!Number.isSafeInteger(file.download_count) || file.download_count < 0) throw new Error('Invalid GitHub download count');
+      return sum + file.download_count;
+    }, 0);
+  }, 0);
+}
 
 // Pick by asset name, not by GitHub's "latest" flag: both apps share one repo,
 // and Pack Studio can ship prereleases that /releases/latest never selects.
@@ -55,13 +68,33 @@ async function load() {
   try {
     const headers: Record<string, string> = { Accept: 'application/vnd.github+json', 'User-Agent': 'extra-cover-site' };
     if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
-    const response = await fetch(`https://api.github.com/repos/${repo}/releases?per_page=30`, { headers, signal: AbortSignal.timeout(8000) });
-    if (!response.ok) throw new Error(`GitHub API ${response.status}`);
-    const list = await response.json() as GitHubRelease[];
-    return {
-      extraCover: pick(list, /^extra-cover-Setup-[\d.]+(?:-[\w.]+)?\.exe$/, (_, file) => file.match(/Setup-(.+)\.exe$/)?.[1], fallback.extraCover, false),
-      packStudio: pick(list, /^packstudio-win-x64\.zip$/, r => r.name?.match(/Pack Studio\s+(\S+)/)?.[1], fallback.packStudio, true),
+    const signal = AbortSignal.timeout(12000);
+    async function page(number: number): Promise<GitHubRelease[]> {
+      const response = await fetch(`https://api.github.com/repos/${repo}/releases?per_page=100&page=${number}`, { headers, signal });
+      if (!response.ok) throw new Error(`GitHub API ${response.status}`);
+      return await response.json() as GitHubRelease[];
+    }
+    const list = await page(1);
+    const result = {
+      extraCover: pick(list, extraCoverAsset, (_, file) => file.match(/Setup-(.+)\.exe$/)?.[1], fallback.extraCover, false),
+      packStudio: pick(list, packStudioAsset, r => r.name?.match(/Pack Studio\s+(\S+)/)?.[1], fallback.packStudio, true),
     };
+    try {
+      // Counts cover all retained releases, including public prereleases. Never
+      // display a partial total if fetching an older page fails.
+      let batch = list;
+      for (let number = 2; batch.length === 100; number++) {
+        batch = await page(number);
+        list.push(...batch);
+      }
+      result.extraCover = { ...pick(list, extraCoverAsset, (_, file) => file.match(/Setup-(.+)\.exe$/)?.[1], fallback.extraCover, false), downloads: totalDownloads(list, extraCoverAsset) };
+      result.packStudio = { ...pick(list, packStudioAsset, r => r.name?.match(/Pack Studio\s+(\S+)/)?.[1], fallback.packStudio, true), downloads: totalDownloads(list, packStudioAsset) };
+    } catch (error) {
+      result.extraCover.downloads = null;
+      result.packStudio.downloads = null;
+      console.warn(`[releases] Omitting download counts: ${(error as Error).message}`);
+    }
+    return result;
   } catch (error) {
     console.warn(`[releases] Using fallback download links: ${(error as Error).message}`);
     return fallback;
