@@ -5,57 +5,163 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'sha256-uBBVx2igJN1LR+/68xBm7Gg0mHi8sslaXCHZqlPxFAI='; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'sha256-TjlrDkE9UKnbNgF7RVB+KrdIGDSH79iJb3hwdQBUDfQ='; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Open in Extra Cover</title>
+<meta property="og:site_name" content="Extra Cover">
 <meta property="og:title" content="Open in Extra Cover">
 <meta property="og:description" content="A Cricket 26 mod shared from Extra Cover. Click to open it in the app.">
+<meta property="og:image" content="https://officialasit.github.io/extracover-pub/images/social-preview.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#4A8BF5">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <style>
-  :root { color-scheme: dark; }
-  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #0E1116; color: #E8ECF1;
-         font: 15px/1.5 system-ui, "Segoe UI", sans-serif; }
-  main { width: min(440px, calc(100% - 48px)); padding: 32px 30px; border-radius: 20px; text-align: center;
-         background: #161B23; border: 1px solid #2A3140; box-shadow: 0 30px 80px rgba(0,0,0,.5); }
-  h1 { margin: 0 0 8px; font-size: 22px; letter-spacing: -0.02em; }
-  p { margin: 0 0 22px; color: #A9B2BF; }
-  a.btn { display: block; margin: 10px 0 0; padding: 12px 18px; border-radius: 12px; text-decoration: none;
-          font-weight: 700; color: #fff; background: #4A8BF5; }
-  a.btn.ghost { background: transparent; border: 1px solid #2A3140; color: #E8ECF1; }
-  a.btn.hide { display: none; }
+  @font-face { font-family: Manrope; src: url('../fonts/manrope-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+  @font-face { font-family: Manrope; src: url('../fonts/manrope-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+  @font-face { font-family: Manrope; src: url('../fonts/manrope-latin-800-normal.woff2') format('woff2'); font-weight: 800; font-display: swap; }
+  :root { color-scheme: dark; --accent: #4A8BF5; --ink: #EEF2F7; --ink-2: #AEB8C6; --ink-3: #7D8899; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px 16px;
+         background: #07090D; color: var(--ink);
+         font: 500 15px/1.5 Manrope, system-ui, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+
+  /* The ground at blue hour, pushed back so the card reads first. */
+  .bg { position: fixed; inset: 0; z-index: -2; background: url('../images/stadium-blue-hour-gpt.webp') center 40% / cover no-repeat;
+        filter: blur(3px) saturate(1.1); transform: scale(1.04); }
+  .bg::after { content: ''; position: absolute; inset: 0;
+               background: radial-gradient(120% 90% at 50% 45%, rgba(7,9,13,.45) 0%, rgba(7,9,13,.82) 60%, rgba(7,9,13,.95) 100%); }
+
+  main { width: min(440px, 100%); padding: 28px 28px 22px; border-radius: 22px;
+         background: rgba(17,21,29,.66); border: 1px solid rgba(255,255,255,.10);
+         -webkit-backdrop-filter: blur(20px) saturate(1.3); backdrop-filter: blur(20px) saturate(1.3);
+         box-shadow: 0 40px 100px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06); }
+
+  .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none;
+           font-weight: 800; font-size: 15px; letter-spacing: -0.01em; }
+  .brand img { width: 28px; height: 28px; border-radius: 7px; }
+
+  .kind { display: inline-block; margin: 26px 0 10px; padding: 4px 10px; border-radius: 999px;
+          font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+          color: #CFE0FF; background: rgba(74,139,245,.16); border: 1px solid rgba(74,139,245,.32); }
+  h1 { margin: 0; font-size: 26px; line-height: 1.2; font-weight: 800; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+  .sub { margin: 8px 0 0; color: var(--ink-2); }
+  .sub:empty { display: none; }
+
+  .actions { display: grid; gap: 10px; margin-top: 24px; }
+  a.btn { display: flex; align-items: center; justify-content: center; gap: 8px; height: 46px; padding: 0 18px;
+          border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 15px; color: #fff;
+          transition: background .15s, border-color .15s, transform .15s; }
+  a.btn.primary { background: var(--accent); box-shadow: 0 10px 28px rgba(74,139,245,.35), inset 0 1px 0 rgba(255,255,255,.22); }
+  a.btn.primary:hover { background: #5C98F7; transform: translateY(-1px); }
+  a.btn.ghost { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.12); color: var(--ink); }
+  a.btn.ghost:hover { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.2); }
+  a.btn:focus-visible, .get a:focus-visible, .brand:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .btn svg { flex: none; }
+
+  .note { margin: 14px 0 0; font-size: 13px; color: var(--ink-3); text-align: center; min-height: 1.5em; }
+  .note strong { color: var(--ink-2); font-weight: 700; }
+
+  .get { display: flex; align-items: center; gap: 14px; margin-top: 20px; padding-top: 18px;
+         border-top: 1px solid rgba(255,255,255,.08); }
+  .get div { flex: 1; min-width: 0; }
+  .get strong { display: block; font-size: 14px; font-weight: 700; }
+  .get span { display: block; font-size: 12.5px; color: var(--ink-3); }
+  .get a { flex: none; padding: 8px 14px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 13px;
+           color: var(--ink); background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); }
+  .get a:hover { background: rgba(255,255,255,.14); }
+
+  .hide { display: none !important; }
+  @media (prefers-reduced-motion: reduce) { a.btn { transition: none; } a.btn.primary:hover { transform: none; } }
+  @media (max-width: 420px) { main { padding: 24px 20px 18px; } h1 { font-size: 23px; } }
 </style>
 </head>
 <body>
+<div class="bg" aria-hidden="true"></div>
 <main>
+  <a class="brand" href="../"><img src="../images/brand-icon-small.webp" alt="" width="28" height="28">Extra Cover</a>
+  <div><span class="kind" id="kind">Shared link</span></div>
   <h1 id="title">Opening Extra Cover…</h1>
-  <p id="lead">If nothing happens, open it with the button below.</p>
-  <a class="btn" id="open" href="#">Open in Extra Cover</a>
-  <a class="btn ghost hide" id="gb" href="#" rel="noopener noreferrer">View on GameBanana</a>
-  <a class="btn ghost" href="../">Get Extra Cover</a>
+  <p class="sub" id="sub"></p>
+  <div class="actions" id="actions">
+    <a class="btn primary" id="open" href="#">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      Open in Extra Cover
+    </a>
+    <a class="btn ghost hide" id="gb" href="#" rel="noopener noreferrer">View on GameBanana</a>
+  </div>
+  <p class="note" id="note" role="status">Your browser will ask to open Extra Cover. Choose <strong>Open</strong>.</p>
+  <div class="get">
+    <div><strong>New to Extra Cover?</strong><span>Free mod manager for Cricket 26 on PC.</span></div>
+    <a href="../">Get it</a>
+  </div>
 </main>
 <script>
 // Chats only make http(s) links clickable, so share links point here and this
 // page hands the extracover: link to the app (app/share-links.js reads it).
-// Only digits (a mod) or a bounded EC1 code (a profile) are passed on.
+// Only digits (a mod) or a bounded EC1 code (a profile) are passed on; the
+// profile's name and count are only shown here, as text.
 (function () {
+  var $ = function (id) { return document.getElementById(id); };
   var q = new URLSearchParams(location.search);
   var mod = q.get('mod'), profile = q.get('profile'), link = null;
+
+  function cleanName(s) {
+    var out = '';
+    for (var i = 0; i < s.length && out.length < 40; i++) {
+      var c = s.charCodeAt(i);
+      if (c < 32 || (c >= 127 && c < 160) || (c >= 0x200b && c <= 0x200f) ||
+          (c >= 0x202a && c <= 0x202e) || (c >= 0x2066 && c <= 0x2069)) continue;
+      out += s.charAt(i);
+    }
+    return out.trim();
+  }
+  function readProfile(code) {
+    try {
+      var b = code.replace(/-/g, '+').replace(/_/g, '/');
+      while (b.length % 4) b += '=';
+      var bin = atob(b), bytes = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      var p = JSON.parse(new TextDecoder().decode(bytes));
+      if (!p || p.v !== 1 || !Array.isArray(p.m) || !p.m.length) return null;
+      return { name: typeof p.n === 'string' ? cleanName(p.n) : '', count: Math.min(p.m.length, 64) };
+    } catch (e) { return null; }
+  }
+
   if (mod && /^\d{1,10}$/.test(mod)) {
     link = 'extracover://mod/' + mod;
-    var gb = document.getElementById('gb');
-    gb.href = 'https://gamebanana.com/mods/' + mod;
-    gb.classList.remove('hide');
+    $('kind').textContent = 'Shared mod';
+    $('title').textContent = 'Open this mod in Extra Cover';
+    $('sub').textContent = 'GameBanana mod #' + mod;
+    $('gb').href = 'https://gamebanana.com/mods/' + mod;
+    $('gb').classList.remove('hide');
   } else if (profile && /^EC1\.[A-Za-z0-9_-]{4,3000}$/.test(profile)) {
-    link = 'extracover://profile/' + profile;
-    document.getElementById('title').textContent = 'Open this profile in Extra Cover';
+    var info = readProfile(profile.slice(4));
+    if (info) {
+      link = 'extracover://profile/' + profile;
+      $('kind').textContent = 'Shared profile';
+      $('title').textContent = info.name ? 'Open “' + info.name + '”' : 'Open this profile';
+      $('sub').textContent = info.count + (info.count === 1 ? ' mod' : ' mods') + ', set up in one go.';
+    }
   }
-  var open = document.getElementById('open');
+
   if (!link) {
-    document.getElementById('title').textContent = 'This link is not complete';
-    document.getElementById('lead').textContent = 'Ask for the link again, or get Extra Cover below.';
-    open.classList.add('hide');
+    $('kind').textContent = 'Broken link';
+    $('title').textContent = 'This link is not complete';
+    $('sub').textContent = 'Ask for the link again.';
+    $('actions').classList.add('hide');
+    $('note').classList.add('hide');
     return;
   }
-  open.href = link;
+
+  $('open').href = link;
+  var left = false;
+  window.addEventListener('blur', function () { left = true; });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) left = true; });
+  setTimeout(function () {
+    $('note').textContent = left
+      ? 'Opened in Extra Cover? You can close this tab.'
+      : 'Nothing happened? Get Extra Cover below, then open this link again.';
+  }, 3000);
   location.href = link;
 })();
 </script>
