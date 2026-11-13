@@ -55,7 +55,7 @@ try {
     return { errors: doc.querySelectorAll('parsererror').length, urls: [...doc.querySelectorAll('loc')].map(e => e.textContent) };
   }, sitemap);
   assert.equal(parsedSitemap.errors, 0);
-  assert.deepEqual(parsedSitemap.urls, indexed ? [canonical, guideUrl] : []);
+  assert.deepEqual(parsedSitemap.urls, indexed ? [canonical, guideUrl, new URL('privacy/', canonical).href] : []);
   assert.ok(robots.includes('Allow: /'));
   assert.equal(robots.includes(`Sitemap: ${new URL('sitemap.xml', canonical).href}`), indexed);
   assert.equal(await page.locator('link[rel="sitemap"]').count(), indexed ? 1 : 0);

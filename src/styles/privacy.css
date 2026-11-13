@@ -1,0 +1,14 @@
+/* Privacy page: the guide layout plus a readable table and lists. */
+.privacy-table-wrap{margin-top:16px;overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.privacy-table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.6}
+.privacy-table th,.privacy-table td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--line)}
+.privacy-table tr:last-child td{border-bottom:0}
+.privacy-table th{font-size:13px;font-weight:700;color:var(--muted);background:var(--subtle)}
+.privacy-table td:first-child{font-weight:700;white-space:nowrap}
+.privacy-list{margin-top:12px;padding-left:22px;display:grid;gap:8px}
+.privacy-list li{font-size:16px;line-height:1.7}
+.privacy-list a,.privacy .guide-body p a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:600px){
+  .privacy-table{font-size:14px}.privacy-table th,.privacy-table td{padding:10px}
+  .privacy-table td:first-child{white-space:normal}.privacy-list li{font-size:15px}
+}

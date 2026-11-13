@@ -92,7 +92,7 @@ Chrome. Build first. It writes screenshots and results to ignored
   (SmartScreen “More info → Run anyway”, extract the Pack Studio ZIP) with the
   Discord invite. Keep links working without JavaScript. The header “Download”
   scrolls to the CTA cards; the hero and cards download directly.
-- Footer: one closing brand mark, Install guide, FAQ, Pack Studio, Join Discord, and
+- Footer: one closing brand mark, Install guide, FAQ, Pack Studio, Join Discord, Privacy, and
   About & credits. Keep it quiet and avoid another download CTA.
 - Keep the subtle divider between installation and Pack Studio.
 

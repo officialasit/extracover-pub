@@ -1,0 +1,148 @@
+---
+import Brand from '../../components/Brand.astro';
+import Icon from '../../components/Icon.astro';
+import { indexingEnabled, privacyPage, siteUrls } from '../../lib/seo';
+import '../../styles/minimal.css';
+import '../../styles/guide.css';
+import '../../styles/privacy.css';
+const base = import.meta.env.BASE_URL;
+const discordInviteUrl = 'https://discord.gg/aaAHaUtEdr';
+const urls = siteUrls(Astro.site);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={privacyPage.description} />
+    <meta name="robots" content={indexingEnabled ? 'index, follow' : 'noindex, follow'} />
+    <meta name="theme-color" content="#0e1116" />
+    <link rel="canonical" href={urls.privacy} />
+    <meta property="og:title" content={privacyPage.title} />
+    <meta property="og:description" content={privacyPage.description} />
+    <meta property="og:url" content={urls.privacy} />
+    <meta property="og:site_name" content="Extra Cover" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content={urls.socialImage} />
+    <title>{privacyPage.title}</title>
+    <link rel="icon" href={`${base}images/brand-icon.png`} type="image/png" />
+    <link rel="icon" href={`${base}favicon.ico`} sizes="any" />
+    <link rel="preload" as="font" href={`${base}fonts/manrope-latin-800-normal.woff2`} type="font/woff2" crossorigin />
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('ec-landing-theme');
+        if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved;
+      } catch {}
+    </script>
+    <noscript><style is:inline>
+      .mobile-menu,.theme-toggle{display:none!important}
+      @media(max-width:767px){#main-nav{display:flex;position:static;padding:0;border:0;flex-wrap:wrap;gap:4px 16px;margin:0}#main-nav a{min-height:36px}.site-header{height:auto;position:static}.nav-inner{flex-wrap:wrap;padding-block:12px}.nav-actions{display:none}}
+    </style></noscript>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container nav-inner">
+        <a href={base} class="brand-link" aria-label="Extra Cover home"><Brand /></a>
+        <nav aria-label="Main navigation" id="main-nav">
+          <a href={`${base}#features`}>Features</a>
+          <a href={`${base}#how-it-works`}>How it works</a>
+          <a href={`${base}#pack-studio`}>For creators</a>
+        </nav>
+        <div class="nav-actions">
+          <button class="icon-button theme-toggle" aria-label="Switch colour theme"><Icon name="sun-moon" /></button>
+          <a class="button button-small" href={`${base}#download`}>Download <Icon name="arrow-down" size={16}/></a>
+          <button class="icon-button mobile-menu" aria-label="Open navigation" aria-controls="main-nav" aria-expanded="false"><Icon name="menu-2" /></button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="guide container privacy">
+      <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+        <a href={base}>Extra Cover</a><span aria-hidden="true">/</span><span aria-current="page">Privacy</span>
+      </nav>
+
+      <header class="guide-header">
+        <p class="eyebrow">PRIVACY POLICY</p>
+        <h1>{privacyPage.headline}</h1>
+        <p class="guide-lede">Extra Cover is a mod manager for Cricket 26 that runs on your PC. It has no accounts and asks for no sign-in. This page lists everything it sends over the internet and why.</p>
+        <p class="guide-meta">Last updated <time datetime={privacyPage.modified}>13 November 2026</time></p>
+      </header>
+
+      <article class="guide-body">
+        <section id="basic-counts" aria-labelledby="basic-title">
+          <h2 id="basic-title">1. Basic usage counts (always sent)</h2>
+          <p>To know how many people use Extra Cover, every copy sends a small anonymous count. You can’t switch this off, because without it we can’t tell whether 50 or 5,000 people use the app. Most desktop software works this way (compare Windows’ “required diagnostic data”). Each count is one of these four:</p>
+          <div class="privacy-table-wrap">
+            <table class="privacy-table">
+              <thead><tr><th scope="col">Count</th><th scope="col">When</th><th scope="col">What it carries</th></tr></thead>
+              <tbody>
+                <tr><td>Installed</td><td>Once, the first time Extra Cover runs</td><td>Nothing beyond the details below</td></tr>
+                <tr><td>Opened today</td><td>At most once a day</td><td>How long Extra Cover has been installed (0, 1, 2–7, 8–14, 15–30, 31–60, 61–90, 91–180 or 180+ days), whether the game has been set up (yes/no), roughly how many mods are in the game (0, 1, 2–5, 6–20, 21+)</td></tr>
+                <tr><td>Active this week</td><td>At most once a week</td><td>Install age, as above; the month Extra Cover was installed (such as “2026-11”); rough number of mods in your library and in the game</td></tr>
+                <tr><td>Active this month</td><td>At most once a month</td><td>Install age and install month, as above</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Each count also carries Extra Cover’s version (and the version of the Chromium engine built into it), your Windows version, your language setting (such as <code>en-IN</code>), whether it is a test build, and a random number made fresh for that one count, so counts can’t be linked to each other.</p>
+          <p><strong>Never sent:</strong> your name, Windows user name, Steam account, email, IP address (see section 4), file paths, mod names, or any ID that could link one count to another or to you. The day Extra Cover was installed stays on your PC; only the month and the rough age bucket are sent, which is how we tell whether people who installed in a given month keep using it.</p>
+          <p><strong>Pack Studio</strong>, the tool creators use to build mods, sends the same four counts to its own separate dashboard, with these differences: “Opened today” carries only the install age, and “Active this week” carries the rough number of packs in your workspace and how many have been built, instead of mod counts. Its version details are Pack Studio’s version and its .NET runtime version. It asks its own detailed-usage question, in the same way as below.</p>
+        </section>
+
+        <section id="detailed-usage" aria-labelledby="detailed-title">
+          <h2 id="detailed-title">2. Detailed usage (only if you say yes)</h2>
+          <p>The first time you use Extra Cover it asks whether to share detailed usage. Nothing in this section is sent unless you click <strong>Share detailed usage</strong>. You can change your answer at any time in Settings, in the privacy section.</p>
+          <p>With a yes, Extra Cover also sends:</p>
+          <ul class="privacy-list">
+            <li>events such as “a mod was installed”, “a mod was removed” or “a profile was switched”, with rough numbers (such as “2–5 mods changed”);</li>
+            <li>for community mods, the mod’s public GameBanana number and where in the app you found it (such as “Trending now”);</li>
+            <li>when an install fails, a fixed reason (such as “the game is running”), never the error text;</li>
+            <li>errors and crashes, with names, file paths and quoted text removed before they leave your PC.</li>
+          </ul>
+        </section>
+
+        <section id="reports" aria-labelledby="reports-title">
+          <h2 id="reports-title">3. Reports you choose to send</h2>
+          <p>When something goes wrong, the error message has a <strong>Send report</strong> button. Clicking it sends that one message, cleaned the same way as above, whatever you answered about usage. Nothing is sent unless you click it. <strong>Copy report</strong> copies a longer report to your clipboard and uploads nothing.</p>
+        </section>
+
+        <section id="who-receives" aria-labelledby="who-title">
+          <h2 id="who-title">4. Who receives the data</h2>
+          <p>Usage counts, detailed usage and reports go to <strong>Aptabase</strong> (<a href="https://aptabase.com" target="_blank" rel="noopener noreferrer">aptabase.com</a>), a privacy-focused analytics service hosted in the EU. Aptabase does not store IP addresses or any user identifier. To count unique sessions it combines your IP address and app details into a code using a secret that changes every day and is then deleted, so a count from today can’t be matched to one from tomorrow. We see only totals.</p>
+        </section>
+
+        <section id="other-connections" aria-labelledby="other-title">
+          <h2 id="other-title">5. Other connections Extra Cover makes</h2>
+          <p>Extra Cover also connects to these services to work. None of them receives your usage data from us:</p>
+          <ul class="privacy-list">
+            <li><strong>GitHub</strong> (github.com, githubusercontent.com): app updates, the official mod catalogue, community lists, featured slides and notices.</li>
+            <li><strong>GameBanana</strong> (gamebanana.com): browsing, searching and downloading community mods.</li>
+            <li><strong>Discord</strong> (only if you connect it in Settings): talks to the Discord app on your PC to show what you’re playing. Mod names appear only if you turn that option on. Nothing goes to Discord’s servers through us.</li>
+          </ul>
+          <p>Each of these services sees your IP address as part of the request, under its own privacy policy.</p>
+        </section>
+
+        <section id="on-your-pc" aria-labelledby="pc-title">
+          <h2 id="pc-title">6. What stays on your PC</h2>
+          <p>Your settings, mod library, profiles, logs, saved searches, bookmarks and followed creators are kept in Extra Cover’s folder on your PC (<code>%APPDATA%\extra-cover</code>) and are never uploaded. Uninstalling Extra Cover and deleting that folder removes them.</p>
+        </section>
+
+        <section id="changes" aria-labelledby="changes-title">
+          <h2 id="changes-title">7. Changes</h2>
+          <p>If what Extra Cover sends changes, this page changes first, and the app’s privacy text changes with the same release.</p>
+        </section>
+
+        <section id="contact" aria-labelledby="contact-title">
+          <h2 id="contact-title">Contact</h2>
+          <p>Questions: ask in the <a href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Extra Cover Discord</a>.</p>
+        </section>
+      </article>
+    </main>
+
+    <footer class="site-footer container">
+      <div class="footer-top"><a href={base} class="brand-link" aria-label="Back to Extra Cover home"><Brand large /></a><nav aria-label="Footer navigation"><a href={`${base}guides/install-cricket-26-mods/`}>Install guide</a><a href={`${base}#faq`}>FAQ</a><a href={`${base}#pack-studio`}>Pack Studio</a><a href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Join Discord</a><a href={`${base}privacy/`} aria-current="page">Privacy</a></nav></div>
+      <div class="footer-bottom"><p>An independent community tool for Cricket 26.</p><p>Made for the love of the game.</p></div>
+    </footer>
+    <script src="../../scripts/interactions.ts"></script>
+  </body>
+</html>

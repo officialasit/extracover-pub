@@ -16,6 +16,7 @@ export function siteUrls(site: URL | undefined, base = import.meta.env.BASE_URL)
     socialImage: new URL('images/social-preview.jpg', home).href,
     logo: new URL('images/brand-icon.png', home).href,
     installGuide: new URL(installGuide.path, home).href,
+    privacy: new URL(privacyPage.path, home).href,
   };
 }
 
@@ -26,6 +27,16 @@ export const installGuide = {
   description: 'How to install Cricket 26 mods on Windows through Steam or the Xbox App with Extra Cover: download the free app, get a pack, install it in one click, undo it, and fix common problems.',
   published: '2026-10-08',
   modified: '2026-10-24',
+};
+
+// The privacy policy the apps link to (privacy/). Keep it in step with what
+// the apps send.
+export const privacyPage = {
+  path: 'privacy/',
+  title: 'Privacy Policy — Extra Cover',
+  headline: 'Privacy policy',
+  description: 'What Extra Cover and Pack Studio send over the internet and why: anonymous basic usage counts, optional detailed usage, reports you choose to send, and what stays on your PC.',
+  modified: '2026-11-13',
 };
 
 // Sitemap lastmod values. Update when a page's content meaningfully changes;
